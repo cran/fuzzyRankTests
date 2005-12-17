@@ -1,0 +1,150 @@
+
+R : Copyright 2005, The R Foundation for Statistical Computing
+Version 2.3.0 Under development (unstable) (2005-11-04 r36176)
+ISBN 3-900051-07-0
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for a HTML browser interface to help.
+Type 'q()' to quit R.
+
+> 
+>  myfun <- function(x, alternative = c("two.sided", "less", "greater")) {
++      alternative <- match.arg(alternative)
++      absx <- abs(x)
++      ntiezero <- sum(absx == 0)
++      foo <- split(x, absx)
++      foo <- foo[names(foo) != "0"]
++      foop <- sapply(foo, function(bar) sum(bar > 0))
++      foon <- sapply(foo, function(bar) sum(bar < 0))
++      mtie <- as.numeric(foon[foop > 0 & foon > 0])
++      ntie <- as.numeric(foop[foop > 0 & foon > 0])
++      plist <- list()
++      if (ntiezero > 0) {
++         i <- seq(0, ntiezero * (ntiezero + 1) / 2)
++         plist[[length(plist) + 1]] <- dsignrank(i, ntiezero)
++      }
++      for (j in 1:length(mtie)) {
++         i <- seq(0, mtie[j] * ntie[j])
++         plist[[length(plist) + 1]] <- dwilcox(i, mtie[j], ntie[j])
++      }
++      ptie <- 1
++      for (j in 1:length(plist))
++         ptie <- convolve(plist[[j]], rev(ptie), type = "o")
++      w <- outer(x, x, "+")
++      w <- w[lower.tri(w, diag = TRUE)]
++      ll <- sum(w < 0)
++      tt <- sum(w == 0)
++      uu <- sum(w > 0)
++      if (tt != sum(sapply(plist, length) - 1))
++          stop("OOPS!")
++      if (alternative == "greater") {
++          return(list(knots = psignrank(seq(ll - 1, ll + tt), length(x)),
++              values = cumsum(c(0, ptie))))
++      }
++      if (alternative == "less") {
++          return(list(knots = psignrank(seq(uu - 1, uu + tt), length(x)),
++              values = cumsum(c(0, ptie))))
++      }
++      if (alternative == "two.sided") {
++          wmin <- min(ll, uu)
++          wmax <- wmin + tt
++          w <- seq(wmin, wmax)
++          pknot <- dsignrank(w, length(x))
++          N <- length(x) * (length(x) + 1) / 2
++          w <- pmin(w, N - w)
++          foo <- split(ptie, w)
++          foo <- sapply(foo, sum)
++          foo <- cumsum(c(0, foo))
++          bar <- pmin(1, 2 * psignrank(seq(min(w) - 1, max(w)), length(x)))
++          return(list(knots = as.numeric(bar), values = as.numeric(foo)))
++      }
++  }
+> 
+>  library(fuzzyRankTests)
+> 
+>  x <- as.double(c(-3, -2, -2, 0, 0, 0, 0, 1, 2, 3, 4, 4, 4, 5, 6, 7))
+>  mu <- as.double(0)
+>  tol <- sqrt(.Machine$double.eps)
+> 
+>  out <- .Call("fpvsignrank", x, mu, "less", tol, PACKAGE = "fuzzyRankTests")
+>  print(out)
+$knots
+ [1] 0.9532776 0.9583740 0.9630432 0.9673004 0.9711609 0.9746704 0.9778442
+ [8] 0.9806824 0.9832306 0.9855042 0.9875183 0.9893036 0.9908752 0.9922485
+[15] 0.9934540
+
+$values
+ [1] 0.00000000 0.01041667 0.04166667 0.09375000 0.16666667 0.26041667
+ [7] 0.37500000 0.50000000 0.62500000 0.73958333 0.83333333 0.90625000
+[13] 0.95833333 0.98958333 1.00000000
+
+>  all.equal(out, myfun(x, "less"))
+[1] TRUE
+> 
+>  x2 <- as.double(c(-4, -4, x))
+> 
+>  out <- .Call("fpvsignrank", x2, mu, "less", tol, PACKAGE = "fuzzyRankTests")
+>  print(out)
+$knots
+ [1] 0.8153915 0.8267250 0.8376350 0.8481026 0.8581352 0.8677368 0.8768959
+ [8] 0.8856239 0.8939285 0.9018059 0.9092674 0.9163246 0.9229774 0.9292412
+[15] 0.9351311 0.9406471 0.9458084 0.9506302 0.9551163 0.9592857 0.9631577
+
+$values
+ [1] 0.000000000 0.001041667 0.005208333 0.015625000 0.036458333 0.071875000
+ [7] 0.125000000 0.196875000 0.286458333 0.389583333 0.500000000 0.610416667
+[13] 0.713541667 0.803125000 0.875000000 0.928125000 0.963541667 0.984375000
+[19] 0.994791667 0.998958333 1.000000000
+
+>  all.equal(out, myfun(x2, "less"))
+[1] TRUE
+> 
+>  mutoo <- as.double(2)
+> 
+>  out <- .Call("fpvsignrank", x, mutoo, "greater", tol,
++      PACKAGE = "fuzzyRankTests")
+>  print(out)
+$knots
+ [1] 0.4104462 0.4301300 0.4499664 0.4699402 0.4899750 0.5100250 0.5300598
+ [8] 0.5500336 0.5698700 0.5895538 0.6090240 0.6282196 0.6471405 0.6657257
+[15] 0.6839142 0.7017059 0.7190552 0.7359161 0.7522888
+
+$values
+ [1] 0.000000000 0.001190476 0.007142857 0.022619048 0.052380952 0.101190476
+ [7] 0.172619048 0.266666667 0.378571429 0.500000000 0.621428571 0.733333333
+[13] 0.827380952 0.898809524 0.947619048 0.977380952 0.992857143 0.998809524
+[19] 1.000000000
+
+>  all.equal(out, myfun(x - mutoo, "great"))
+[1] TRUE
+> 
+>  ##### check for error found in devel ####
+>  try(.Call("fpvsignrank", x, mutoo, "two", tol, PACKAGE = "fuzzyRankTests"))
+Error in try(.Call("fpvsignrank", x, mutoo, "two", tol, PACKAGE = "fuzzyRankTests")) : 
+	'alternative' not recognized
+> 
+>  out <- .Call("fpvsignrank", x, mutoo, "two.sided", tol,
++      PACKAGE = "fuzzyRankTests")
+>  print(out)
+$knots
+ [1] 0.4954224 0.5281677 0.5618896 0.5965881 0.6321716 0.6685486 0.7057190
+ [8] 0.7435608 0.7819519 0.8208923 0.8602600 0.8999329 0.9398804 0.9799500
+[15] 1.0000000
+
+$values
+ [1] 0.000000000 0.001190476 0.007142857 0.022619048 0.052380952 0.101190476
+ [7] 0.172619048 0.266666667 0.378571429 0.500000000 0.622619048 0.740476190
+[13] 0.850000000 0.951190476 1.000000000
+
+>  all.equal(out, myfun(x - mutoo, "two"))
+[1] TRUE
+> 
+> 

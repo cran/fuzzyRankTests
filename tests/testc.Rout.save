@@ -1,0 +1,121 @@
+
+R : Copyright 2005, The R Foundation for Statistical Computing
+Version 2.3.0 Under development (unstable) (2005-11-04 r36176)
+ISBN 3-900051-07-0
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for a HTML browser interface to help.
+Type 'q()' to quit R.
+
+> 
+>   library(fuzzyRankTests)
+> 
+>   x <- c(1, 2, 3, 4, 4, 4, 5, 6, 7)
+>   y <- c(4, 5, 7, 7, 8, 9, 10, 11)
+>   mu <- 0
+>   tol <- sqrt(.Machine$double.eps)
+> 
+>  .Call("fpvranksum", x, y, mu, "less", tol, PACKAGE = "fuzzyRankTests")
+$knots
+[1] 0.0004936240 0.0007815714 0.0012340601 0.0018510901 0.0027560675
+[6] 0.0039489922 0.0055532703 0.0076100370
+
+$values
+[1] 0.00000000 0.04166667 0.16666667 0.37500000 0.62500000 0.83333333 0.95833333
+[8] 1.00000000
+
+> 
+>  .Call("fpvranksum", x, y, mu, "two.sided", tol, PACKAGE = "fuzzyRankTests")
+$knots
+[1] 0.000987248 0.001563143 0.002468120 0.003702180 0.005512135 0.007897984
+[7] 0.011106541 0.015220074
+
+$values
+[1] 0.00000000 0.04166667 0.16666667 0.37500000 0.62500000 0.83333333 0.95833333
+[8] 1.00000000
+
+> 
+>  .Call("fpvranksum", x, y, mu = -3, "two.sided", tol,
++      PACKAGE = "fuzzyRankTests")
+$knots
+ [1] 0.2358700 0.2765940 0.3212670 0.3703826 0.4234471 0.4807075 0.5414233
+ [8] 0.6058412 0.6729741 0.7429864 0.8148087 0.8883587 0.9625668
+
+$values
+ [1] 0.000000 0.003125 0.021875 0.075000 0.175000 0.321875 0.500000 0.678125
+ [9] 0.825000 0.925000 0.978125 0.996875 1.000000
+
+> 
+>  .Call("fpvranksum", x, y, mu = -4, "two.sided", tol,
++      PACKAGE = "fuzzyRankTests")
+$knots
+ [1] 0.4234471 0.4807075 0.5414233 0.6058412 0.6729741 0.7429864 0.8148087
+ [8] 0.8883587 0.9625668 1.0000000
+
+$values
+ [1] 0.000000000 0.005208333 0.036458333 0.125000000 0.286458333 0.500000000
+ [7] 0.713541667 0.875000000 0.968750000 1.000000000
+
+> 
+>  y <- c(-1, y)
+> 
+>  .Call("fpvranksum", x, y, mu = -3, "two.sided", tol,
++      PACKAGE = "fuzzyRankTests")
+$knots
+[1] 0.4894282 0.5457014 0.6048128 0.6664747 0.7304401 0.7961744 0.8633073
+[8] 0.9314274 1.0000000
+
+$values
+[1] 0.000000 0.003125 0.021875 0.075000 0.175000 0.325000 0.521875 0.753125
+[9] 1.000000
+
+> 
+>  .Call("fpvranksum", x, y, mu, "less", tol, PACKAGE = "fuzzyRankTests")
+$knots
+[1] 0.007095845 0.009378856 0.012217195 0.015734266 0.019991773 0.025154258
+[7] 0.031262855 0.038502674
+
+$values
+[1] 0.00000000 0.04166667 0.16666667 0.37500000 0.62500000 0.83333333 0.95833333
+[8] 1.00000000
+
+> 
+>  .Call("fpvranksum", y, x, mu, "great", tol, PACKAGE = "fuzzyRankTests")
+$knots
+[1] 0.007095845 0.009378856 0.012217195 0.015734266 0.019991773 0.025154258
+[7] 0.031262855 0.038502674
+
+$values
+[1] 0.00000000 0.04166667 0.16666667 0.37500000 0.62500000 0.83333333 0.95833333
+[8] 1.00000000
+
+> 
+>  set.seed(42)
+>  x <- rnorm(10)
+>  y <- rnorm(10) + 1.5
+>  .Call("fpvranksum", sort(x), sort(y), mu, "two.sided", tol,
++      PACKAGE = "fuzzyRankTests")
+$knots
+[1] 0.2474507 0.2798610
+
+$values
+[1] 0 1
+
+> 
+>  ##### Check that init.c actually protects against the segfault we got
+>  ##### during development.
+>  ##### It does once we got the name "R_init_fuzzyRankTests" right!
+> 
+>  try(.Call("fpvranksum", y, x, mu, "great", PACKAGE = "fuzzyRankTests"))
+Error in try(.Call("fpvranksum", y, x, mu, "great", PACKAGE = "fuzzyRankTests")) : 
+	Incorrect number of arguments (4), expecting 5 for fpvranksum
+> 
+> 

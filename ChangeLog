@@ -1,0 +1,7 @@
+
+ 0.1   First try.  Only does sign test and associated confidence interval.
+
+ 0.2   Now does Mann-Whitney-Wilcoxon (two sample) test and associate c. i.
+
+ 0.3   Finally!!!  Now does Wilcoxon (one sample) test and associate c. i.
+

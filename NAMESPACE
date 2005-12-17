@@ -1,0 +1,17 @@
+useDynLib(fuzzyRankTests)
+
+export(fuzzy.sign.ci)
+export(fuzzy.sign.test)
+export(fuzzy.signrank.ci)
+export(fuzzy.signrank.test)
+export(fuzzy.ranksum.ci)
+export(fuzzy.ranksum.test)
+export(plot.fuzzyrankci)
+export(plot.fuzzyranktest)
+export(print.fuzzyrankci)
+export(print.fuzzyranktest)
+
+S3method(plot, fuzzyrankci)
+S3method(plot, fuzzyranktest)
+S3method(print, fuzzyrankci)
+S3method(print, fuzzyranktest)
