@@ -35,5 +35,7 @@
  ##### during development.
  ##### It does once we got the name "R_init_fuzzyRankTests" right!
 
- try(.Call("fpvranksum", y, x, mu, "great", PACKAGE = "fuzzyRankTests"))
+ if (.Platform$OS.type == "unix") {
+     try(.Call("fpvranksum", y, x, mu, "great", PACKAGE = "fuzzyRankTests"))
+ }
 

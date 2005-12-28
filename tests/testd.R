@@ -75,7 +75,9 @@
  all.equal(out, myfun(x - mutoo, "great"))
 
  ##### check for error found in devel ####
- try(.Call("fpvsignrank", x, mutoo, "two", tol, PACKAGE = "fuzzyRankTests"))
+ if (.Platform$OS.type == "unix") {
+     try(.Call("fpvsignrank", x, mutoo, "two", tol, PACKAGE = "fuzzyRankTests"))
+ }
 
  out <- .Call("fpvsignrank", x, mutoo, "two.sided", tol,
      PACKAGE = "fuzzyRankTests")

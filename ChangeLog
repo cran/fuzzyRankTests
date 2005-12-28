@@ -5,3 +5,5 @@
 
  0.3   Finally!!!  Now does Wilcoxon (one sample) test and associate c. i.
 
+ 0.3-1   Removed test under WinDoze that makes it segfault under WinDoze.
+

@@ -114,7 +114,9 @@ $values
 >  ##### during development.
 >  ##### It does once we got the name "R_init_fuzzyRankTests" right!
 > 
->  try(.Call("fpvranksum", y, x, mu, "great", PACKAGE = "fuzzyRankTests"))
+>  if (.Platform$OS.type == "unix") {
++      try(.Call("fpvranksum", y, x, mu, "great", PACKAGE = "fuzzyRankTests"))
++  }
 Error in try(.Call("fpvranksum", y, x, mu, "great", PACKAGE = "fuzzyRankTests")) : 
 	Incorrect number of arguments (4), expecting 5 for fpvranksum
 > 

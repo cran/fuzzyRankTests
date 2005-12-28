@@ -127,7 +127,9 @@ $values
 [1] TRUE
 > 
 >  ##### check for error found in devel ####
->  try(.Call("fpvsignrank", x, mutoo, "two", tol, PACKAGE = "fuzzyRankTests"))
+>  if (.Platform$OS.type == "unix") {
++      try(.Call("fpvsignrank", x, mutoo, "two", tol, PACKAGE = "fuzzyRankTests"))
++  }
 Error in try(.Call("fpvsignrank", x, mutoo, "two", tol, PACKAGE = "fuzzyRankTests")) : 
 	'alternative' not recognized
 > 
