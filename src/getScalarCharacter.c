@@ -3,7 +3,7 @@
 #include <Rinternals.h>
 #include "myutil.h"
 
-char *getScalarCharacter(SEXP foo)
+const char *getScalarCharacter(SEXP foo)
 {
     if (! isString(foo))
         error("argument must be character");

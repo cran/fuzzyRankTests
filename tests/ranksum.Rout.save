@@ -1,6 +1,6 @@
 
-R : Copyright 2005, The R Foundation for Statistical Computing
-Version 2.3.0 Under development (unstable) (2005-11-04 r36176)
+R version 2.6.0 (2007-10-03)
+Copyright (C) 2007 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -12,7 +12,7 @@ Type 'contributors()' for more information and
 'citation()' on how to cite R or R packages in publications.
 
 Type 'demo()' for some demos, 'help()' for on-line help, or
-'help.start()' for a HTML browser interface to help.
+'help.start()' for an HTML browser interface to help.
 Type 'q()' to quit R.
 
 > 
@@ -48,10 +48,10 @@ values
 
 data:  x and y 
 W = 8, p-value = 0.007566
-alternative hypothesis: true mu is not equal to 0 
+alternative hypothesis: true location shift is not equal to 0 
 
 Warning message:
-cannot compute exact p-value with ties in: wilcox.test.default(x, y) 
+In wilcox.test.default(x, y) : cannot compute exact p-value with ties
 > 
 >  fuzzy.ranksum.test(x, y, alt = "less")
 
@@ -80,10 +80,11 @@ values
 
 data:  x and y 
 W = 8, p-value = 0.003783
-alternative hypothesis: true mu is less than 0 
+alternative hypothesis: true location shift is less than 0 
 
 Warning message:
-cannot compute exact p-value with ties in: wilcox.test.default(x, y, alt = "less") 
+In wilcox.test.default(x, y, alt = "less") :
+  cannot compute exact p-value with ties
 > 
 >  fuzzy.ranksum.ci(x, y)
 
@@ -109,7 +110,7 @@ Fuzzy confidence interval:
 
 data:  x and y 
 W = 8, p-value = 0.007566
-alternative hypothesis: true mu is not equal to 0 
+alternative hypothesis: true location shift is not equal to 0 
 95 percent confidence interval:
  -6.000051 -1.000052 
 sample estimates:
@@ -117,8 +118,10 @@ difference in location
              -3.999972 
 
 Warning messages:
-1: cannot compute exact p-value with ties in: wilcox.test.default(x, y, conf.int = TRUE) 
-2: cannot compute exact confidence intervals with ties in: wilcox.test.default(x, y, conf.int = TRUE) 
+1: In wilcox.test.default(x, y, conf.int = TRUE) :
+  cannot compute exact p-value with ties
+2: In wilcox.test.default(x, y, conf.int = TRUE) :
+  cannot compute exact confidence intervals with ties
 > 
 >  fuzzy.ranksum.ci(x, y, alt = "less")
 
@@ -142,7 +145,7 @@ Fuzzy confidence interval:
 
 data:  x and y 
 W = 8, p-value = 0.003783
-alternative hypothesis: true mu is less than 0 
+alternative hypothesis: true location shift is less than 0 
 95 percent confidence interval:
       -Inf -1.999986 
 sample estimates:
@@ -150,8 +153,10 @@ difference in location
              -3.999949 
 
 Warning messages:
-1: cannot compute exact p-value with ties in: wilcox.test.default(x, y, conf.int = TRUE, alt = "less") 
-2: cannot compute exact confidence intervals with ties in: wilcox.test.default(x, y, conf.int = TRUE, alt = "less") 
+1: In wilcox.test.default(x, y, conf.int = TRUE, alt = "less") :
+  cannot compute exact p-value with ties
+2: In wilcox.test.default(x, y, conf.int = TRUE, alt = "less") :
+  cannot compute exact confidence intervals with ties
 > 
 >  fuzzy.ranksum.ci(x, y, alt = "great")
 
@@ -175,7 +180,7 @@ Fuzzy confidence interval:
 
 data:  x and y 
 W = 8, p-value = 0.9972
-alternative hypothesis: true mu is greater than 0 
+alternative hypothesis: true location shift is greater than 0 
 95 percent confidence interval:
  -5.999985       Inf 
 sample estimates:
@@ -183,7 +188,9 @@ difference in location
              -3.999996 
 
 Warning messages:
-1: cannot compute exact p-value with ties in: wilcox.test.default(x, y, conf.int = TRUE, alt = "great") 
-2: cannot compute exact confidence intervals with ties in: wilcox.test.default(x, y, conf.int = TRUE, alt = "great") 
+1: In wilcox.test.default(x, y, conf.int = TRUE, alt = "great") :
+  cannot compute exact p-value with ties
+2: In wilcox.test.default(x, y, conf.int = TRUE, alt = "great") :
+  cannot compute exact confidence intervals with ties
 > 
 > 

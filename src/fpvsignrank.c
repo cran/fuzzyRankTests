@@ -12,7 +12,7 @@ SEXP fpvsignrank(SEXP xin, SEXP muin, SEXP altin, SEXP tolin)
     double *x;
     double mu = getScalarReal(muin);
     double tol = getScalarReal(tolin);
-    char *alt = getScalarCharacter(altin);
+    const char *alt = getScalarCharacter(altin);
     int nx;
     int two_tail;
     int lower_tail;

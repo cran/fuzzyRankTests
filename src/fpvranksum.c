@@ -12,7 +12,7 @@ SEXP fpvranksum(SEXP xin, SEXP yin, SEXP muin, SEXP altin, SEXP tolin)
     double *y;
     double mu = getScalarReal(muin);
     double tol = getScalarReal(tolin);
-    char *alt = getScalarCharacter(altin);
+    const char *alt = getScalarCharacter(altin);
     int i, j;
     int nx;
     int ny;

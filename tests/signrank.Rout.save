@@ -1,6 +1,6 @@
 
-R : Copyright 2005, The R Foundation for Statistical Computing
-Version 2.3.0 Under development (unstable) (2005-11-04 r36176)
+R version 2.6.0 (2007-10-03)
+Copyright (C) 2007 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -12,7 +12,7 @@ Type 'contributors()' for more information and
 'citation()' on how to cite R or R packages in publications.
 
 Type 'demo()' for some demos, 'help()' for on-line help, or
-'help.start()' for a HTML browser interface to help.
+'help.start()' for an HTML browser interface to help.
 Type 'q()' to quit R.
 
 > 
@@ -54,11 +54,11 @@ values
 
 data:  x 
 V = 66.5, p-value = 0.03355
-alternative hypothesis: true mu is not equal to 0 
+alternative hypothesis: true location is not equal to 0 
 
 Warning messages:
-1: cannot compute exact p-value with ties in: wilcox.test.default(x) 
-2: cannot compute exact p-value with zeroes in: wilcox.test.default(x) 
+1: In wilcox.test.default(x) : cannot compute exact p-value with ties
+2: In wilcox.test.default(x) : cannot compute exact p-value with zeroes
 > 
 >  fuzzy.signrank.test(x, alt = "less")
 
@@ -94,11 +94,13 @@ values
 
 data:  x 
 V = 66.5, p-value = 0.9862
-alternative hypothesis: true mu is less than 0 
+alternative hypothesis: true location is less than 0 
 
 Warning messages:
-1: cannot compute exact p-value with ties in: wilcox.test.default(x, alt = "less") 
-2: cannot compute exact p-value with zeroes in: wilcox.test.default(x, alt = "less") 
+1: In wilcox.test.default(x, alt = "less") :
+  cannot compute exact p-value with ties
+2: In wilcox.test.default(x, alt = "less") :
+  cannot compute exact p-value with zeroes
 > 
 >  fuzzy.signrank.test(x, alt = "great")
 
@@ -134,11 +136,13 @@ values
 
 data:  x 
 V = 66.5, p-value = 0.01678
-alternative hypothesis: true mu is greater than 0 
+alternative hypothesis: true location is greater than 0 
 
 Warning messages:
-1: cannot compute exact p-value with ties in: wilcox.test.default(x, alt = "great") 
-2: cannot compute exact p-value with zeroes in: wilcox.test.default(x, alt = "great") 
+1: In wilcox.test.default(x, alt = "great") :
+  cannot compute exact p-value with ties
+2: In wilcox.test.default(x, alt = "great") :
+  cannot compute exact p-value with zeroes
 > 
 >  fuzzy.signrank.ci(x)
 
@@ -164,7 +168,7 @@ Fuzzy confidence interval:
 
 data:  x 
 V = 66.5, p-value = 0.03355
-alternative hypothesis: true mu is not equal to 0 
+alternative hypothesis: true location is not equal to 0 
 95 percent confidence interval:
  0.4999542 4.5000543 
 sample estimates:
@@ -172,10 +176,14 @@ sample estimates:
       2.500058 
 
 Warning messages:
-1: cannot compute exact p-value with ties in: wilcox.test.default(x, conf.int = TRUE) 
-2: cannot compute exact confidence interval with ties in: wilcox.test.default(x, conf.int = TRUE) 
-3: cannot compute exact p-value with zeroes in: wilcox.test.default(x, conf.int = TRUE) 
-4: cannot compute exact confidence interval with zeroes in: wilcox.test.default(x, conf.int = TRUE) 
+1: In wilcox.test.default(x, conf.int = TRUE) :
+  cannot compute exact p-value with ties
+2: In wilcox.test.default(x, conf.int = TRUE) :
+  cannot compute exact confidence interval with ties
+3: In wilcox.test.default(x, conf.int = TRUE) :
+  cannot compute exact p-value with zeroes
+4: In wilcox.test.default(x, conf.int = TRUE) :
+  cannot compute exact confidence interval with zeroes
 > 
 >  fuzzy.signrank.ci(x, alt = "less")
 
@@ -201,7 +209,7 @@ Fuzzy confidence interval:
 
 data:  x 
 V = 66.5, p-value = 0.9862
-alternative hypothesis: true mu is less than 0 
+alternative hypothesis: true location is less than 0 
 95 percent confidence interval:
      -Inf 4.499937 
 sample estimates:
@@ -209,10 +217,14 @@ sample estimates:
       2.500003 
 
 Warning messages:
-1: cannot compute exact p-value with ties in: wilcox.test.default(x, conf.int = TRUE, alt = "less") 
-2: cannot compute exact confidence interval with ties in: wilcox.test.default(x, conf.int = TRUE, alt = "less") 
-3: cannot compute exact p-value with zeroes in: wilcox.test.default(x, conf.int = TRUE, alt = "less") 
-4: cannot compute exact confidence interval with zeroes in: wilcox.test.default(x, conf.int = TRUE, alt = "less") 
+1: In wilcox.test.default(x, conf.int = TRUE, alt = "less") :
+  cannot compute exact p-value with ties
+2: In wilcox.test.default(x, conf.int = TRUE, alt = "less") :
+  cannot compute exact confidence interval with ties
+3: In wilcox.test.default(x, conf.int = TRUE, alt = "less") :
+  cannot compute exact p-value with zeroes
+4: In wilcox.test.default(x, conf.int = TRUE, alt = "less") :
+  cannot compute exact confidence interval with zeroes
 > 
 >  fuzzy.signrank.ci(x, alt = "great")
 
@@ -236,7 +248,7 @@ Fuzzy confidence interval:
 
 data:  x 
 V = 66.5, p-value = 0.01678
-alternative hypothesis: true mu is greater than 0 
+alternative hypothesis: true location is greater than 0 
 95 percent confidence interval:
  0.5000073       Inf 
 sample estimates:
@@ -244,9 +256,13 @@ sample estimates:
       2.500058 
 
 Warning messages:
-1: cannot compute exact p-value with ties in: wilcox.test.default(x, conf.int = TRUE, alt = "great") 
-2: cannot compute exact confidence interval with ties in: wilcox.test.default(x, conf.int = TRUE, alt = "great") 
-3: cannot compute exact p-value with zeroes in: wilcox.test.default(x, conf.int = TRUE, alt = "great") 
-4: cannot compute exact confidence interval with zeroes in: wilcox.test.default(x, conf.int = TRUE, alt = "great") 
+1: In wilcox.test.default(x, conf.int = TRUE, alt = "great") :
+  cannot compute exact p-value with ties
+2: In wilcox.test.default(x, conf.int = TRUE, alt = "great") :
+  cannot compute exact confidence interval with ties
+3: In wilcox.test.default(x, conf.int = TRUE, alt = "great") :
+  cannot compute exact p-value with zeroes
+4: In wilcox.test.default(x, conf.int = TRUE, alt = "great") :
+  cannot compute exact confidence interval with zeroes
 > 
 > 

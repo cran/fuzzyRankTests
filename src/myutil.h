@@ -11,7 +11,7 @@ double getScalarReal(SEXP foo);
 
 int isAllFinite(SEXP foo);
 
-char *getScalarCharacter(SEXP foo);
+const char *getScalarCharacter(SEXP foo);
 
 #endif /* FUZZYRANKTESTS_MYUTIL_H */
 
