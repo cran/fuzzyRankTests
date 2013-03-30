@@ -8,14 +8,14 @@
   Plot or Print Fuzzy Rank Objects.
 }
 \usage{
-plot.fuzzyrankci(x, y, add = FALSE, verticals = FALSE,
+\method{plot}{fuzzyrankci}(x, y, add = FALSE, verticals = FALSE,
     col.hor = par("col"), col.vert = par("col"), lty.vert = 2,
     pch.vert = 19, full.ylim = TRUE, extra.xlim = 0.2, main, \dots)
-plot.fuzzyranktest(x, y, type = c("pdf", "cdf"), add = FALSE,
+\method{plot}{fuzzyranktest}(x, y, type = c("pdf", "cdf"), add = FALSE,
     col.hor = par("col"), col.vert = par("col"), lty.vert = 2,
     extra.xlim = 0.2, main, \dots)
-print.fuzzyrankci(x, digits = 4, \dots)
-print.fuzzyranktest(x, digits = 4, \dots)
+\method{print}{fuzzyrankci}(x, digits = 4, \dots)
+\method{print}{fuzzyranktest}(x, digits = 4, \dots)
 }
 \arguments{
   \item{x}{object of class \code{"fuzzyrankci"} or \code{"fuzzyranktest"}.}

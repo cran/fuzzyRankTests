@@ -1,13 +1,14 @@
 Package: fuzzyRankTests
-Version: 0.3-2
-Date: 09 October 2007
+Version: 0.3-4
+Date: 2013-03-30
 Title: Fuzzy Rank Tests and Confidence Intervals
 Author: Charles J. Geyer <charlie@stat.umn.edu>
 Maintainer: Charles J. Geyer <charlie@stat.umn.edu>
 Depends: R (>= 2.6.0)
 Description: see title
-License: X11
+License: MIT + file LICENSE
 URL: http://www.stat.umn.edu/geyer/fuzz/
-Packaged: Tue Oct 9 10:41:56 2007; charlie
+Packaged: 2013-03-30 23:48:17 UTC; charlie
+NeedsCompilation: yes
 Repository: CRAN
-Date/Publication: 2007-10-09 19:57:57
+Date/Publication: 2013-03-31 07:54:52

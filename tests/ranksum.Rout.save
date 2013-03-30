@@ -1,7 +1,8 @@
 
-R version 2.6.0 (2007-10-03)
-Copyright (C) 2007 The R Foundation for Statistical Computing
+R version 2.15.2 (2012-10-26) -- "Trick or Treat"
+Copyright (C) 2012 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
+Platform: x86_64-unknown-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -115,7 +116,7 @@ alternative hypothesis: true location shift is not equal to 0
  -6.000051 -1.000052 
 sample estimates:
 difference in location 
-             -3.999972 
+              -3.99995 
 
 Warning messages:
 1: In wilcox.test.default(x, y, conf.int = TRUE) :
@@ -150,7 +151,7 @@ alternative hypothesis: true location shift is less than 0
       -Inf -1.999986 
 sample estimates:
 difference in location 
-             -3.999949 
+              -3.99995 
 
 Warning messages:
 1: In wilcox.test.default(x, y, conf.int = TRUE, alt = "less") :
@@ -185,7 +186,7 @@ alternative hypothesis: true location shift is greater than 0
  -5.999985       Inf 
 sample estimates:
 difference in location 
-             -3.999996 
+              -3.99995 
 
 Warning messages:
 1: In wilcox.test.default(x, y, conf.int = TRUE, alt = "great") :
@@ -194,3 +195,6 @@ Warning messages:
   cannot compute exact confidence intervals with ties
 > 
 > 
+> proc.time()
+   user  system elapsed 
+  0.149   0.035   0.275 

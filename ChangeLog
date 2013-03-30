@@ -15,3 +15,5 @@
 
          Also to typos had been corrected in inst/doc/design.tex but
          were not in the the previous version.
+
+ 0.3-3   Made R CMD check (2.15.1) not barf

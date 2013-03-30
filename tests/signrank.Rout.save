@@ -1,7 +1,8 @@
 
-R version 2.6.0 (2007-10-03)
-Copyright (C) 2007 The R Foundation for Statistical Computing
+R version 2.15.2 (2012-10-26) -- "Trick or Treat"
+Copyright (C) 2012 The R Foundation for Statistical Computing
 ISBN 3-900051-07-0
+Platform: x86_64-unknown-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -170,10 +171,10 @@ data:  x
 V = 66.5, p-value = 0.03355
 alternative hypothesis: true location is not equal to 0 
 95 percent confidence interval:
- 0.4999542 4.5000543 
+ 0.4999892 4.5000043 
 sample estimates:
 (pseudo)median 
-      2.500058 
+      2.500029 
 
 Warning messages:
 1: In wilcox.test.default(x, conf.int = TRUE) :
@@ -214,7 +215,7 @@ alternative hypothesis: true location is less than 0
      -Inf 4.499937 
 sample estimates:
 (pseudo)median 
-      2.500003 
+      2.500029 
 
 Warning messages:
 1: In wilcox.test.default(x, conf.int = TRUE, alt = "less") :
@@ -235,10 +236,10 @@ data:  x
 
 Fuzzy confidence interval:
 
-         set value
- (-Inf, 0.5) 0.000
-       {0.5} 0.954
-  (0.5, Inf) 1.000
+         set  value
+ (-Inf, 0.5) 0.0000
+       {0.5} 0.9539
+  (0.5, Inf) 1.0000
 
 
 > 
@@ -253,7 +254,7 @@ alternative hypothesis: true location is greater than 0
  0.5000073       Inf 
 sample estimates:
 (pseudo)median 
-      2.500058 
+      2.500029 
 
 Warning messages:
 1: In wilcox.test.default(x, conf.int = TRUE, alt = "great") :
@@ -266,3 +267,6 @@ Warning messages:
   cannot compute exact confidence interval with zeroes
 > 
 > 
+> proc.time()
+   user  system elapsed 
+  0.153   0.024   0.266 
