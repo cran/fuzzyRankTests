@@ -2,14 +2,16 @@
 \documentclass{article}
 
 \usepackage{indentfirst}
-\usepackage{amsmath}
+\usepackage{amsmath,amsthm}
 \usepackage{natbib}
 \usepackage{url}
 
 \newcommand{\BinomialDis}{\text{\upshape Bin}}
 \newcommand{\UniformDis}{\text{\upshape Unif}}
 \newcommand{\MannWhitneyDis}{\text{\upshape MannWhit}}
+\newcommand{\SignRankDis}{\text{\upshape SignRank}}
 \newcommand{\opor}{\mathbin{\rm or}}
+\newcommand{\opand}{\mathbin{\rm and}}
 
 \newtheorem{theorem}{Theorem}
 \newtheorem{hypothesis}{Hypothesis}
@@ -19,6 +21,108 @@
 \title{Design of the Fuzzy Rank Tests Package}
 \author{Charles J. Geyer}
 \maketitle
+
+\section{Introduction}
+
+We do fuzzy $P$-values and confidence intervals following
+\citet{geyer-meeden} and \citet{thompson-geyer} for three classical
+nonparametric procedures: the sign test and the two Wilcoxon tests and
+their associated confidence intervals.
+
+\subsection{Classical Randomized Tests}
+
+Following \citet{geyer-meeden}, let
+$$
+   x \mapsto \phi(x, \alpha, \theta)
+$$
+denote the critical function of a randomized test having significance level
+$\alpha$ and point null hypothesis $\theta$, that is, the randomized test
+rejects the null hypothesis $\theta = \theta_0$ at level $\alpha$ when the
+observed data are $x$ with probability $\phi(x, \alpha, \theta_0)$.
+
+The requirement that $\phi(x, \alpha, \theta)$ be a probability restricts
+it to being between zero and one (inclusive).  The requirement that the
+test have its nominal level is
+\begin{equation} \label{eq:level}
+   E_\theta \{ \phi(X, \alpha, \theta) \} = \alpha,
+   \qquad \text{for all $\theta$ and $\alpha$}.
+\end{equation}
+
+\subsection{Fuzzy $P$-values}
+
+A \emph{fuzzy $P$-value} for this test with null hypothesis $\theta = \theta_0$
+and observed data $x$ is a random variable having distribution function
+\begin{equation} \label{eq:fpv-df}
+   \alpha \mapsto \phi(x, \alpha, \theta_0)
+\end{equation}
+\citep[Section~1.4]{geyer-meeden}.  In order for this to be a distribution
+function, it must be nondecreasing
+\begin{equation} \label{eq:nested}
+   \alpha_1 < \alpha_2 \mathrel{\rm implies}
+   \phi(x, \alpha_1, \theta) \le \phi(x, \alpha_2, \theta),
+   \qquad \text{for all $x$ and $\theta$}.
+\end{equation}
+\citet{geyer-meeden} call this property of the family of tests
+(each $\alpha$ specifying a different tests) being \emph{nested}.
+
+For all the tests considered
+by \citet{geyer-meeden}, \citet{thompson-geyer}, or in this document,
+the fuzzy $P$-value is a continuous random variable, so its probability
+density function is
+$$
+   \frac{\partial \phi(x, \alpha, \theta_0)}{\partial \alpha}
+$$
+considered as a function of $\alpha$ for fixed $x$ and $\theta_0$.
+
+If we write the fuzzy $P$-value as a random variable $P$, then the
+critical function has the interpretation
+$$
+   \phi(X, \alpha, \theta) = \Pr\nolimits_\theta(P \le \alpha \mid X).
+$$
+and \eqref{eq:level} applied to this gives
+$$
+   \Pr\nolimits_\theta(P \le \alpha)
+   =
+   E_\theta\{ \Pr\nolimits_\theta(P \le \alpha \mid X) \}
+   =
+   E_\theta\{ \phi(X, \alpha, \theta) \}
+   =
+   \alpha
+$$
+so $P$ is unconditionally $\UniformDis(0, 1)$ distributed for all $\theta$.
+
+\subsection{Fuzzy Confidence Intervals}
+
+A \emph{fuzzy confidence interval} associated with this test
+having coverage probability $1 - \alpha$ is
+for observed data $x$ a fuzzy set having membership function
+\begin{equation} \label{eq:fci}
+   \theta \mapsto 1 - \phi(x, \alpha, \theta)
+\end{equation}
+\citep[Section~1.4]{geyer-meeden}.
+The interpretation is that the right-hand side of \eqref{eq:fci} is
+the degree to which $\theta$ is considered to be ``in'' the fuzzy confidence
+interval.  The coverage probability is
+$$
+   E_\theta\{ 1 - \phi(X, \alpha, \theta) \} = 1 - \alpha,
+$$
+which is just \eqref{eq:level} rewritten.
+
+
+\subsection{Latent Variable Randomized Tests}
+
+One way to make a randomized test is the following \citep{thompson-geyer}.
+Suppose we have observed data $x$ and latent data $y$ (also called random
+effects and Bayesians call them parameters).  And suppose we have a
+possibly randomized test for the complete data with critical function
+$$
+   (x, y) \mapsto \psi(x, y, \alpha, \theta).
+$$
+Then $\phi$ defined by
+$$
+   \phi(x, \alpha, \theta) = E \{ \psi(X, Y, \alpha, \theta) \mid X = x \}
+$$
+is a critical function for a randomized test for the observed data.
 
 \section{Sign Test}
 
@@ -37,8 +141,9 @@ The hypothesized value of $\mu$ is the median of the distribution
 
 If the distribution of the $X_i$ is not continuous, so ties are possible,
 we break the ties by ``infinitesimal jittering'' of the data.
-If $l$, $t$, and $u$ data points are below, tied with, and above $\mu$,
-respectively, after infinitesimal jittering we have $W = u + T$ of the
+If $l$, $t$, and $u$ data points are below $\mu$, tied with $\mu$,
+and above $\mu$, respectively, then after infinitesimal jittering
+we have $W = u + T$ of the
 jittered data points strictly greater than $\mu$,
 where $T \sim \BinomialDis(t, 1 / 2)$.
 Again we have $W \sim \BinomialDis(n, 1 / 2)$,
@@ -51,12 +156,62 @@ The hypothesized value of $\mu$ is the median of the distribution
 Since we cannot in practice distinguish infinitesimally separated points,
 we consider these two hypotheses the same in practice.
 
-We call $W$ the \emph{latent test statistic} and base the fuzzy test
+Following \citet{thompson-geyer},
+we call $W$ the \emph{latent test statistic} and base the fuzzy test
 on it.  Table~1 in \citet{fuzzy-rank} shows how a fuzzy test based
 on such a test statistic works.  The rest of that paper sketches the
 tie breaking by infinitesimal jittering we explore in detail here.
 
 \subsection{One-Tailed Tests}
+
+\subsubsection{General}
+
+Suppose we have a test with univariate discrete test statistic $X$
+taking values in a discrete set $S$, and we want to do an upper-tailed test.
+We claim that the random variable $P$ defined as follows is a fuzzy $P$-value:
+conditional on $X = x$ the random variable $P$ has the
+$\UniformDis\bigl(a(x, \theta), b(x, \theta)\bigr)$ distribution, where
+\begin{align*}
+   a(x, \theta) & = \Pr\nolimits_\theta\{ X > x \}
+   \\
+   b(x, \theta) & = \Pr\nolimits_\theta\{ X \ge x \}
+\end{align*}
+
+To prove this we must show that the critical function
+$$
+   \phi(x, \alpha, \theta)
+   =
+   \begin{cases}
+   0, & \alpha \le a(x, \theta)
+   \\
+   \frac{\alpha - a(x, \theta)}{b(x, \theta) - a(x, \theta)}, &
+   a(x, \theta) < \alpha < b(x, \theta)
+   \\
+   1, & \alpha \ge b(x, \theta)
+   \end{cases}
+$$
+satisfies \eqref{eq:level} (it clearly satisfies \eqref{eq:nested}).
+Let $x^*$ denote the unique element of $S$ such that
+$a(x^*, \theta) < \alpha < b(x^*, \theta)$.
+Note that $x^*$ is a function of $\alpha$ even though the notation
+does not indicate this.
+Then
+\begin{align*}
+   E_\theta\{ \phi(X, \alpha, \theta) \}
+   & =
+   \sum_{x \in S} \Pr\nolimits_\theta(X = x)
+   \cdot \phi(x, \alpha, \theta)
+   \\
+   & =
+   \Pr\nolimits_\theta\bigl(X > x^*\bigr)
+   +
+   \Pr\nolimits_\theta\bigl(X = x^*\bigr)
+   \cdot
+   \frac{\alpha - a(x^*, \theta)}{b(x^*, \theta) - a(x^*, \theta)}
+\end{align*}
+and this is equal to $\alpha$, so \eqref{eq:level} holds.
+
+\subsubsection{Latent Test for Sign Test}
 
 The latent fuzzy $P$-value for latent test statistic $u + T$
 is $\UniformDis(a, b)$ where
@@ -65,10 +220,16 @@ is $\UniformDis(a, b)$ where
    \\
    b & = \Pr\{ W \ge u + T \}
 \end{align*}
+Note that $a$ and $b$ depend on $u + T$ although the notation does not
+indicate this.
+The (actual, non-latent) fuzzy $P$-value is a mixture of these uniform
+distributions (mixing over the latent variable $T$).
 This means the (actual, non-latent) fuzzy $P$-value has continuous,
 piecewise linear CDF with
 knots $\Pr\{ W > u + t - k \}$ and corresponding values
 $\Pr\{ T < k \}$, where $k = 0$, \ldots, $t + 1$.
+Recall that the distribution of $W$ is $\BinomialDis(n, 1 / 2)$
+and the distribution of $T$ is $\BinomialDis(t, 1 / 2)$.
 
 For a lower-tailed test, swap $l$ and $u$ and proceed as above.
 
@@ -92,6 +253,8 @@ Because of the symmetry of the distribution of $W$ we always have
    \\
    b & = \min\bigl( 1, 2 \Pr\{ W \ge g(T) \} \bigr)
 \end{align*}
+Note that in all of these $a$ and $b$ depend on $T$ even though the notation
+does not indicate this.
 
 Thus we can get the fuzzy $P$-value for a two-tailed test by simply
 calculating the fuzzy $P$-value for the one-tailed test for the tail
@@ -176,12 +339,12 @@ $$
 where $W \sim \BinomialDis(n, 1 / 2)$, then the membership function of
 the fuzzy confidence interval with coverage $1 - \alpha$ is zero for
 $$
-   \mu < X_{(m)} \quad \text{or} \quad X_{(n - m + 1)} < \mu.
+   \mu < X_{(m)} \opor X_{(n - m + 1)} < \mu.
 $$
 \end{theorem}
 If the only $m$ satisfying the condition is $m = 0$, then the assertion
 of the theorem is vacuously true.
-
+\begin{proof}
 For $\mu < X_{(m)}$
 we have at least $n - m + 1$ data values above $\mu$.
 Since $m \le n / 2$ the latent test
@@ -192,6 +355,7 @@ Hence we accept this $\mu$ with probability zero,
 and the membership function of the fuzzy confidence interval is zero
 at this $\mu$.
 The case $\mu > X_{(n - m + 1)}$ follows by symmetry.
+\end{proof}
 
 \begin{theorem} \label{th:one}
 If
@@ -207,7 +371,7 @@ the fuzzy confidence interval with coverage $1 - \alpha$ is one for
 \end{theorem}
 If the only $m$ satisfying the condition have $m + 1 \ge n - m$,
 then the assertion of the theorem is vacuously true.
-
+\begin{proof}
 If \eqref{eq:one} holds, then
 we have at least $m + 1$ data values below $\mu$ and at least $m + 1$ above.
 Hence we also have at most $n - m - 1$ data values below $\mu$ and at most
@@ -216,6 +380,7 @@ Hence the fuzzy $P$-value has support
 bounded below by $2 \Pr(W > n - m - 1) = 2 \Pr(W \le m) \ge \alpha$.
 Hence we accept this $\mu$ with probability one,
 and the fuzzy confidence interval is one at this $\mu$.
+\end{proof}
 
 Thus we see that if we chose $m$ to satisfy
 \begin{equation} \label{quantile}
@@ -274,8 +439,9 @@ We have simply obtained more information.  Now we know that the membership
 function of the fuzzy confidence interval is $\gamma$ on the intervals
 $(X_{(m)}, X_{(m + 1)})$ and $(X_{(n - m)}, X_{(n - m + 1)})$.
 Under the assumption that the distribution of the $X_i$ is continuous,
-the values at points does not matter because points occur with probability
-zero.
+the values at the jumps of the membership function do not matter because
+single points occur with probability zero (assuming ``no ties'' results
+from having a continuous data distribution).
 
 \paragraph{Caveat} The above discussion is predicated on $m + 1 < n - m$,
 which is the same as $m < (n - 1) / 2$.  This can only fail for ridiculously
@@ -327,23 +493,23 @@ with membership function
    I(\mu)
    =
    \begin{cases}
-   0 & \mu < X_{(m)}
+   0, & \mu < X_{(m)}
    \\
-   \beta_1 & \mu = X_{(m)}
+   \beta_1, & \mu = X_{(m)}
    \\
-   \gamma & X_{(m)} < \mu < X_{(m + 1)}
+   \gamma, & X_{(m)} < \mu < X_{(m + 1)}
    \\
-   \beta_2 & \mu = X_{(m + 1)}
+   \beta_2, & \mu = X_{(m + 1)}
    \\
-   1 & X_{(m + 1)} < \mu < X_{(n - m)}
+   1, & X_{(m + 1)} < \mu < X_{(n - m)}
    \\
-   \beta_3 & \mu = X_{(n - m)}
+   \beta_3, & \mu = X_{(n - m)}
    \\
-   \gamma & X_{(n - m)} < \mu < X_{(n - m + 1)}
+   \gamma, & X_{(n - m)} < \mu < X_{(n - m + 1)}
    \\
-   \beta_4 & \mu = X_{(n - m + 1)}
+   \beta_4, & \mu = X_{(n - m + 1)}
    \\
-   0 & \mu > X_{(n - m + 1)}
+   0, & \mu > X_{(n - m + 1)}
    \end{cases}
 \end{equation}
 where $m$ is chosen so that \eqref{quantile} holds.
@@ -362,7 +528,7 @@ $\gamma$ in \eqref{non-degenerate} is given by \eqref{gamma-cool}.
 \end{theorem}
 If both of the intervals $(X_{(m)}, X_{(m + 1)})$ and
 $(X_{(n - m)}, X_{(n - m + 1)})$ are empty, then the theorem is vacuous.
-
+\begin{proof}
 For $X_{(m)} < \mu < X_{(m + 1)}$
 we have exactly $m$ data values below $\mu$ and exactly $n - m$ above,
 and the latent test statistic is $n - m$.  The fuzzy $P$-value is uniform
@@ -375,8 +541,9 @@ Hence the probability the fuzzy $P$-value is greater than $\alpha$ is
 given by \eqref{gamma-cool}, and this is the value of $I(\mu)$ for this
 $\mu$.
 The case $X_{(n - m)} < \mu < X_{(n - m + 1)}$ follows by symmetry.
+\end{proof}
 
-Now we know every thing about the fuzzy confidence interval except for
+Now we know everything about the fuzzy confidence interval except for
 the betas, which can be determined by inverting the fuzzy test (as can
 the value at all points), so now we are down to inverting the test at
 at most four points
@@ -392,7 +559,7 @@ The fuzzy confidence interval given by \eqref{non-degenerate} is convex.
 \end{theorem}
 Convexity of a fuzzy set with membership function $I$ is the property
 that all of the sets $\{\, \mu : I(u) \ge u \,\}$ are convex.
-
+\begin{proof}
 First consider the case when $X_{(m + 1)} < X_{(n - m)}$ so there are
 points $\mu$ where $I(\mu) = 1$.  Then, since all of the betas are
 probabilities, convexity only requires
@@ -458,7 +625,9 @@ in which case convexity requires $\beta_1 \le \gamma$ and $\beta_4 \le \gamma$,
 but these have already been proved.
 If $X_{(m)} = X_{(m + 1)}$, then $\beta_1 = \beta_2 = \beta_3 = \beta_4$ is
 the only nonzero value of $I(\mu)$ and convexity holds trivially.
-This finishes the proof of Theorem~\ref{th:convex}.
+\end{proof}
+
+\subsubsection{No Ties, Continued}
 
 We can refine the calculations above in the most common case.
 \begin{theorem} \label{th:half}
@@ -481,37 +650,43 @@ When $m + 1 = n - m$, we still have \eqref{fran},
 but \eqref{fred} is replaced by $\beta_2 = \beta_3 = \gamma$.
 When $m = n - m$, we still have \eqref{fran},
 but \eqref{fred} is replaced by $\beta_1 = \beta_2 = \beta_3 = \beta_4$.
-
+\begin{proof}
 When there are no ties and $X_{(m)} = \mu$,
 then we have $m - 1$ data values below, one tied with, and $n - m$
 above $\mu$, respectively.
 The latent test statistic is $n - m + T$,
 where $T \sim \BinomialDis(1, 1 / 2)$.
-The fuzzy $P$-value is uniform on the interval
-with endpoints $2 \Pr \{ W < m - 1 \}$ and $2 \Pr \{ W \le m \}$,
-and the probability of accepting $\mu$, which is
-$\gamma \cdot \Pr \{ T = 1 \}$,
-is $\gamma / 2$, because $T$ is Bernoulli.
+The distribution function of the fuzzy $P$-value is continuous and
+piecewise linear with knots $2 \Pr \{ W < m - 1 \}$, $2 \Pr \{ W < m \}$,
+and $\Pr \{ W \le m \opor W \ge n - m \}$ and values at these knots
+$0$, $1 / 2$, and $1$.
+As always, the probability of accepting $\mu$ is $\Pr \{ P > \alpha \}$,
+and by \eqref{quantile} we have
+$2 \Pr \{ W < m \} < \alpha < \Pr \{ W \le m \opor W \ge n - m \}$,
+so the probability of accepting $\mu$ is $\gamma / 2$, where
+$\gamma$ is given by \eqref{gamma-cool}.
 
 When there are no ties and $X_{(m + 1)} = \mu$
 and $m + 1 < n - m$,
-the fuzzy $P$-value is uniform on the interval
-with endpoints $2 \Pr \{ W < m \}$ and $2 \Pr \{ W \le m + 1 \}$,
-and the probability of accepting $\mu$, which is
-$\Pr \{ T > 0 \} + \gamma \cdot \Pr \{ T = 0 \}$
-is $\gamma / 2 + 1 / 2$.
+the distribution function of the fuzzy $P$-value is continuous and
+piecewise linear with knots $2 \Pr \{ W < m \}$, $2 \Pr \{ W \le m \}$,
+and $\Pr \{ W \le m + 1 \opor W \ge n - m - 1 \}$ and values at these knots
+$0$, $1 / 2$, and $1$.
+Again, $2 \Pr \{ W < m \} < \alpha < 2 \Pr \{ W \le m \}$,
+so $\Pr \{ P > \alpha \} = \gamma / 2 + 1 / 2$,
+where $\gamma$ is given by \eqref{gamma}.
 
 When there are no ties and $X_{(m + 1)} = \mu$
-and $m + 1 = n - m$,
-the fuzzy $P$-value is uniform on the interval
-with endpoints $2 \Pr \{ W < m \}$ and one,
+and $m + 1 = n - m$, we have $\Pr \{ W \le m \} = 1 / 2$,
+and the fuzzy $P$-value is uniformly distributed on the interval
+with endpoints $2 \Pr \{ W < m \}$ and one.
 and the probability of accepting $\mu$ is
 is $(1 - \alpha) / [1 - 2 \Pr\{W < m\}]$, which is \eqref{gamma-foo}.
 
 When there are no ties and $X_{(m + 1)} = \mu$
 and $m = n - m$, there is nothing to prove because $\beta_1 = \beta_3$
 and $\beta_2 = \beta_4$ follow from $m = n - m$.
-This finishes the proof of Theorem~\ref{th:half}.
+\end{proof}
 
 \subsection{One-Sided Confidence Intervals}
 
@@ -522,15 +697,15 @@ has the form
    I(\mu)
    =
    \begin{cases}
-   0 & \mu < X_{(m)}
+   0, & \mu < X_{(m)}
    \\
-   \beta_1 & \mu = X_{(m)}
+   \beta_1, & \mu = X_{(m)}
    \\
-   \gamma & X_{(m)} < \mu < X_{(m + 1)}
+   \gamma, & X_{(m)} < \mu < X_{(m + 1)}
    \\
-   \beta_2 & \mu = X_{(m + 1)}
+   \beta_2, & \mu = X_{(m + 1)}
    \\
-   1 & X_{(m + 1)} < \mu < \infty
+   1, & X_{(m + 1)} < \mu < \infty
    \end{cases}
 \end{equation}
 where $m$ is chosen so that
@@ -629,7 +804,96 @@ Everything is the same as with the sign test.  Merely replace the $X_{(i)}$
 there with the $Z_{(i)}$ here and replace the binomial distribution with
 the Mann-Whitney distribution.
 
+\section{The Signed Rank Test}
+
+Now we have one sample $X_1$, $\ldots$, $X_n$.
+The test is based on the $N = n (n + 1) / 2$ Walsh averages
+\begin{equation} \label{eq:walsh}
+   \frac{X_i + X_j}{2}, \qquad i \le j.
+\end{equation}
+Let $Z_{(k)}$, $k = 1$, $\ldots$, $N$ be the order statistics of the
+Walsh averages.  If we assume (1) the sample is IID
+(2) the distribution of the $X_i$ is continuous,
+(3) the distribution of the $X_i$ is symmetric about $\mu$,
+then the distribution of the number of Walsh averages greater than $\mu$
+is symmetric about $N / 2$ and has the distribution
+of the test statistic for the Wilcoxon signed rank test.
+
+Thus all of the theory is nearly the same as for the sign test
+but with the following differences.
+\begin{itemize}
+\item The $Z_{(k)}$ now play the role formerly played by the $X_{(i)}$.
+\item The signed rank distribution now plays the role formerly played by
+    the binomial distribution.
+\item We have $Z_{(k)}$ tied with $\mu$ in one of two cases.
+\begin{itemize}
+\item Some number $m$ of the $X_i$ are tied with $\mu$.  (Each $X_i$
+    is a Walsh average, the case $i = j$ in \eqref{eq:walsh}.)
+    Infinitesimal jittering only breaks ties within one class of tied
+    values.  In this case the number of these $m$ Walsh averages that
+    are greater than $\mu$ after jittering has the signed rank distribution
+    with sample size $m$.
+\item Some number $k$ of the $X_i$ are tied with each other and less than
+    $\mu$, another number $m$ of the $X_i$ are tied with each other and
+    greater than $\mu$, and $(X_i + X_j) / 2 = \mu$ for $X_i$ in the
+    former class and $X_j$ in the latter.  Again,
+    infinitesimal jittering only breaks ties within these classes of tied
+    values.  In this case, the number of these $m n$ Walsh averages that
+    are greater than $\mu$ after jittering has the Mann-Whitney distribution
+    with sample size $k$ and $m$.
+\end{itemize}
+\end{itemize}
+Thus we see that both the signed rank and Mann-Whitney distributions are
+involved in calculating fuzzy $P$-values and fuzzy confidence intervals
+associated with the signed rank test.
+
+\subsection{One-Tailed Tests}
+
+Let $\MannWhitneyDis(m, n)$ denote the Mann-Whitney distribution,
+with sample sizes $m$ and $n$, and let $\SignRankDis(n)$ denote
+the Wilcoxon signed rank distribution for sample size $n$.
+
+If there are no ties, if $W$ is a random variable having
+the $\SignRankDis(n)$ distribution, and if the observed value
+of the signed rank statistic (the number of Walsh averages greater than $\mu$)
+is $w$, then the fuzzy $P$-value for a upper-tailed test is uniformly
+distributed on the interval with endpoints $\Pr\{ W < w \}$
+and $\Pr \{ W \le w \}$.
+
+If there are ties, then $T$ denote a random variable having the distribution
+of the number of Walsh averages that were tied with $\mu$ before infinitesimal
+jittering and are greater than $\mu$ after jittering.  Let $G$ denote
+the cumulative distribution function of this distribution.
+
+As in the preceding section, the distribution of $T$ is, in general, not
+a brand name distribution.  Rather it is the sum of random variables
+having Wilcoxon signed rank or Mann-Whitney distributions.
+
+Now let $l$ be the number of observed Walsh averages less than $\mu$.
+The latent test
+statistic is $l + T$.  The fuzzy $P$-value has a continuous, piecewise linear
+CDF with knots at $\Pr\{ W < l + k \}$ and values $G(k)$
+for $k = 0$, $\ldots$, $t + 1$.
+
+The lower-tailed test is the same except let $l$ be the number of observed
+Walsh averages greater than $\mu$.
+
+\subsection{Two-Tailed Tests and Confidence Intervals}
+
+The issues here are similar to those for the signed test and rank sum test.
+
 \begin{thebibliography}{}
+
+\bibitem[Geyer and Meeden(2005)]{geyer-meeden}
+Geyer, C.~J. and Meeden, G.~D. (2005).
+\newblock Fuzzy and randomized confidence intervals and P-values
+    (with discussion).
+\newblock \emph{Statistical Science} \textbf{20} 358--387.
+
+\bibitem[Thompson and Geyer(2007)]{thompson-geyer}
+Thompson, E.~A. and Geyer, C.~J. (2007).
+\newblock Fuzzy P-values in latent variable problems.
+\newblock \emph{Biometrika} \textbf{94} 49--60.
 
 \bibitem[Geyer(submitted)]{fuzzy-rank}
 Geyer, C.~J. (submitted).

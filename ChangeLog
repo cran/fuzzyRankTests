@@ -17,3 +17,8 @@
          were not in the the previous version.
 
  0.3-3   Made R CMD check (2.15.1) not barf
+
+ 0.3-4   Licence issues
+
+ 0.3-5   Extensive additions to design doc (inst/doc/design.tex) to go with
+         submission of paper

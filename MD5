@@ -1,5 +1,5 @@
-4e81cd7ac8003259c85b2b799ee26024 *ChangeLog
-e150e78b4f6a070acde608d697fde017 *DESCRIPTION
+ffbf0455676e2288377f5c9a7d772cbd *ChangeLog
+77a818858bbf221bb8c6fc1f05fbec5f *DESCRIPTION
 9e78d002c95d36803e46d496d51497b4 *LICENSE
 e0c401b3670a6df0b4e1db968984fa23 *NAMESPACE
 4706812d33fc403d6837c85bfe58e0cd *R/fuzzy.ranksum.ci.R
@@ -12,7 +12,8 @@ a49b3c571a2f87cf3202a8bc95a8fef4 *R/fuzzy.signrank.test.R
 d4d3d3fef9b2b196ce06f6cc0d07a72b *R/plot.fuzzyranktest.R
 f5a6156836fa34b7dd847db44472aa86 *R/print.fuzzyrankci.R
 a4e5414f5a10fa2a9813302b2e2ac388 *R/print.fuzzyranktest.R
-8fbd7e0b08a2f3b6552a62aa057cc835 *inst/doc/design.tex
+01ae3a266d3012760a8ccce25660297d *inst/doc/design.pdf
+42f4dbd298db2481a026673eb9386dad *inst/doc/design.tex
 f6c971b53c65a22aba7cff672b810fbc *man/fuzzy.ranksum.test.Rd
 5b0528339053f60206d025132953315a *man/fuzzy.sign.test.Rd
 86e0488eb44b53ca5470e859f73a4ea1 *man/fuzzy.signrank.test.Rd
