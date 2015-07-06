@@ -32,8 +32,6 @@ SEXP fpvsignrank(SEXP xin, SEXP muin, SEXP altin, SEXP tolin)
     int lenout;
     SEXP result;
 
-    /***** REVISED DOWN TO HERE *****/
-
     if (! isReal(xin))
         error("'x' must be real");
     if (! isAllFinite(xin))

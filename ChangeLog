@@ -22,3 +22,9 @@
 
  0.3-5   Extensive additions to design doc (inst/doc/design.tex) to go with
          submission of paper
+
+ 0.3-6   explicitly import from stats, graphics as required by R-3.3.0
+
+ 0.3-7   got rid of .Platform$OS.type == "unix" in tests because of
+             complaint from CRAN
+

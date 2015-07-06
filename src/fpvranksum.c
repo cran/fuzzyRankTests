@@ -58,8 +58,18 @@ SEXP fpvranksum(SEXP xin, SEXP yin, SEXP muin, SEXP altin, SEXP tolin)
         if (y[i] < y[i - 1])
             error("'y' must be nondecreasing vector");
 
-    two_tail = (strncmp(alt, "two.sided", 20) == 0);
-    lower_tail = (strncmp(alt, "less", 20) == 0);
+   if (strncmp(alt, "less", 20) == 0) {
+        lower_tail = 1;
+        two_tail = 0;
+    } else if (strncmp(alt, "greater", 20) == 0) {
+        lower_tail = 0;
+        two_tail = 0;
+    } else if (strncmp(alt, "two.sided", 20) == 0) {
+        lower_tail = 0;
+        two_tail = 1;
+    } else {
+        error("'alternative' not recognized");
+    }
 
     /* do twice to avoid mallocing 2 * length(x) memory */
     ntieclass = 0;

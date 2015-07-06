@@ -23,7 +23,7 @@
 
  .Call("fpvranksum", x, y, mu, "less", tol, PACKAGE = "fuzzyRankTests")
 
- .Call("fpvranksum", y, x, mu, "great", tol, PACKAGE = "fuzzyRankTests")
+ .Call("fpvranksum", y, x, mu, "greater", tol, PACKAGE = "fuzzyRankTests")
 
  set.seed(42)
  x <- rnorm(10)
@@ -35,7 +35,5 @@
  ##### during development.
  ##### It does once we got the name "R_init_fuzzyRankTests" right!
 
- if (.Platform$OS.type == "unix") {
-     try(.Call("fpvranksum", y, x, mu, "great", PACKAGE = "fuzzyRankTests"))
- }
+ try(.Call("fpvranksum", y, x, mu, "great", PACKAGE = "fuzzyRankTests"))
 

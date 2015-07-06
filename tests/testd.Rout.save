@@ -1,7 +1,7 @@
 
-R : Copyright 2005, The R Foundation for Statistical Computing
-Version 2.3.0 Under development (unstable) (2005-11-04 r36176)
-ISBN 3-900051-07-0
+R version 3.2.1 (2015-06-18) -- "World-Famous Astronaut"
+Copyright (C) 2015 The R Foundation for Statistical Computing
+Platform: i686-pc-linux-gnu (32-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -12,7 +12,7 @@ Type 'contributors()' for more information and
 'citation()' on how to cite R or R packages in publications.
 
 Type 'demo()' for some demos, 'help()' for on-line help, or
-'help.start()' for a HTML browser interface to help.
+'help.start()' for an HTML browser interface to help.
 Type 'q()' to quit R.
 
 > 
@@ -127,11 +127,9 @@ $values
 [1] TRUE
 > 
 >  ##### check for error found in devel ####
->  if (.Platform$OS.type == "unix") {
-+      try(.Call("fpvsignrank", x, mutoo, "two", tol, PACKAGE = "fuzzyRankTests"))
-+  }
+>  try(.Call("fpvsignrank", x, mutoo, "two", tol, PACKAGE = "fuzzyRankTests"))
 Error in try(.Call("fpvsignrank", x, mutoo, "two", tol, PACKAGE = "fuzzyRankTests")) : 
-	'alternative' not recognized
+  'alternative' not recognized
 > 
 >  out <- .Call("fpvsignrank", x, mutoo, "two.sided", tol,
 +      PACKAGE = "fuzzyRankTests")
@@ -150,3 +148,6 @@ $values
 [1] TRUE
 > 
 > 
+> proc.time()
+   user  system elapsed 
+  0.308   0.012   0.312 

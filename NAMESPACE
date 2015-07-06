@@ -15,3 +15,8 @@ S3method(plot, fuzzyrankci)
 S3method(plot, fuzzyranktest)
 S3method(print, fuzzyrankci)
 S3method(print, fuzzyranktest)
+
+importFrom(stats, dbinom, pbinom, qbinom)
+importFrom(stats, dsignrank, psignrank, qsignrank)
+importFrom(stats, dwilcox, pwilcox, qwilcox)
+importFrom(graphics, par, plot, points, lines, segments)

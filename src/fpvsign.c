@@ -1,4 +1,9 @@
 
+// if mu is hypothesized value, then ll == sum(x < mu), uu == sum(x > mu)
+// and ll == sum(x == mu).  tailsexp == 2 if and only if a two tailed test
+// is wanted.  Otherwise does upper-tailed test.  Swap arguments ll and uu
+// to do lower-tailed test.
+
 #include <R.h>
 #include <Rinternals.h>
 #include <Rmath.h>

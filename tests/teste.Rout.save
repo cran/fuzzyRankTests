@@ -1,0 +1,184 @@
+
+R version 3.2.1 (2015-06-18) -- "World-Famous Astronaut"
+Copyright (C) 2015 The R Foundation for Statistical Computing
+Platform: i686-pc-linux-gnu (32-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> 
+>  library(fuzzyRankTests)
+> 
+>  # follow sections 2.1.2 and 2.2 of the design doc
+> 
+>  myfun <- function(x, mu, alternative = c("two.sided", "less", "greater")) {
++      alternative <- match.arg(alternative)
++      ll <- sum(x < mu)
++      tt <- sum(x == mu)
++      uu <- sum(x > mu)
++      n <- length(x)
++      if (alternative != "two.sided") {
++          if (alternative == "less") {
++              foo <- ll
++              ll <- uu
++              uu <- foo
++          }
++          k <- seq(0, tt)
++          values <- c(0, pbinom(k, tt, 1 / 2))
++          k <- seq(0, tt + 1)
++          knots <- pbinom(uu + tt - k, n, 1 / 2, lower.tail = FALSE)
++      } else {
++          # two sided
++          if (ll > uu) {
++              foo <- ll
++              ll <- uu
++              uu <- foo
++          }
++          k <- seq(0, tt + 1)
++          values <- pbinom(k - 1, tt, 1 / 2)
++          knots <- pbinom(uu + tt - k, n, 1 / 2, lower.tail = FALSE)
++          knots <- 2 * knots
++          if (max(knots) > 1) {
++              kk <- seq(0, tt)
++              pp <- dbinom(kk, tt, 1 / 2)
++              mm.low <- 2 * (ll + kk) < n
++              mm.equ <- 2 * (ll + kk) == n
++              mm.hig <- 2 * (ll + kk) > n
++              pp.low <- pp[mm.low]
++              pp.equ <- pp[mm.equ]
++              pp.hig <- pp[mm.hig]
++              pp.hig <- c(pp.hig, rep(0, length(pp.low) - length(pp.hig)))
++              pp.hig <- rev(pp.hig)
++              pp <- c(pp.low + pp.hig, pp.equ)
++              values <- c(0, cumsum(pp))
++              knots <- knots[seq(along = values)]
++              knots[length(knots)] <- 1
++          }
++      }
++ 
++      return(list(knots = as.numeric(knots), values = as.numeric(values)))
++  }
+> 
+>  x <- as.double(c(-3, -2, -2, 0, 0, 0, 0, 1, 2, 3, 4, 4, 4, 5, 6, 7))
+>  mu <- as.double(0)
+> 
+>  # less
+>  out <- .Call("fpvsign", sum(x > mu), sum(x == mu), sum(x < mu), 1,
++      PACKAGE = "fuzzyRankTests")
+>  mout <- myfun(x, mu, "less")
+>  print(out)
+$knots
+[1] 0.5981903 0.7727509 0.8949432 0.9615936 0.9893646 0.9979095
+
+$values
+[1] 0.0000 0.0625 0.3125 0.6875 0.9375 1.0000
+
+>  print(mout)
+$knots
+[1] 0.5981903 0.7727509 0.8949432 0.9615936 0.9893646 0.9979095
+
+$values
+[1] 0.0000 0.0625 0.3125 0.6875 0.9375 1.0000
+
+>  all.equal(out, mout)
+[1] TRUE
+> 
+>  # greater
+>  out <- .Call("fpvsign", sum(x < mu), sum(x == mu), sum(x > mu), 1,
++      PACKAGE = "fuzzyRankTests")
+>  mout <- myfun(x, mu, "great")
+>  print(out)
+$knots
+[1] 0.002090454 0.010635376 0.038406372 0.105056763 0.227249146 0.401809692
+
+$values
+[1] 0.0000 0.0625 0.3125 0.6875 0.9375 1.0000
+
+>  print(mout)
+$knots
+[1] 0.002090454 0.010635376 0.038406372 0.105056763 0.227249146 0.401809692
+
+$values
+[1] 0.0000 0.0625 0.3125 0.6875 0.9375 1.0000
+
+>  all.equal(out, mout)
+[1] TRUE
+> 
+>  # two-tailed
+>  out <- .Call("fpvsign", sum(x > mu), sum(x == mu), sum(x < mu), 2,
++      PACKAGE = "fuzzyRankTests")
+>  mout <- myfun(x, mu, "two")
+>  print(out)
+$knots
+[1] 0.004180908 0.021270752 0.076812744 0.210113525 0.454498291 0.803619385
+
+$values
+[1] 0.0000 0.0625 0.3125 0.6875 0.9375 1.0000
+
+>  print(mout)
+$knots
+[1] 0.004180908 0.021270752 0.076812744 0.210113525 0.454498291 0.803619385
+
+$values
+[1] 0.0000 0.0625 0.3125 0.6875 0.9375 1.0000
+
+>  all.equal(out, mout)
+[1] TRUE
+> 
+>  x2 <- as.double(c(-4, -4, x))
+> 
+>  # less
+>  out <- .Call("fpvsign", sum(x2 > mu), sum(x2 == mu), sum(x2 < mu), 1,
++      PACKAGE = "fuzzyRankTests")
+>  mout <- myfun(x2, mu, "less")
+>  # print(out)
+>  # print(mout)
+>  all.equal(out, mout)
+[1] TRUE
+> 
+>  mutoo <- as.double(2)
+> 
+>  # greater
+>  out <- .Call("fpvsign", sum(x < mutoo), sum(x == mutoo), sum(x > mutoo), 1,
++      PACKAGE = "fuzzyRankTests")
+>  mout <- myfun(x, mutoo, "great")
+>  # print(out)
+>  # print(mout)
+>  all.equal(out, mout)
+[1] TRUE
+> 
+>  # test hard case
+> 
+>  x3 <- c(-5, -6, - 7, x2)
+> 
+>  out <- .Call("fpvsign", sum(x3 < mu), sum(x3 == mu), sum(x3 > mu), 2,
++      PACKAGE = "fuzzyRankTests")
+>  mout <- myfun(x3, mu, "two")
+>  # print(out)
+>  # print(mout)
+>  all.equal(out, mout)
+[1] TRUE
+> 
+>  x3 <- c(x3, 10)
+> 
+>  out <- .Call("fpvsign", sum(x3 < mu), sum(x3 == mu), sum(x3 > mu), 2,
++      PACKAGE = "fuzzyRankTests")
+>  mout <- myfun(x3, mu, "two")
+>  # print(out)
+>  # print(mout)
+>  all.equal(out, mout)
+[1] TRUE
+> 
+> 
+> proc.time()
+   user  system elapsed 
+  0.276   0.032   0.302 
