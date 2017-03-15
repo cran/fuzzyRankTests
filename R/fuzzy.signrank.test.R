@@ -37,8 +37,8 @@ fuzzy.signrank.test <- function(x,
     dname <- deparse(substitute(x))
 
     sortx <- as.double(sort(x))
-    out <- .Call("fpvsignrank", sortx, as.double(mu),
-        alternative, as.double(tol), PACKAGE = "fuzzyRankTests")
+    out <- .Call(C_fpvsignrank, sortx, as.double(mu),
+        alternative, as.double(tol))
 
     method <- "Wilcoxon signed rank test"
     if (missing(alpha)) {

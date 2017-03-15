@@ -1,4 +1,4 @@
-useDynLib(fuzzyRankTests)
+useDynLib(fuzzyRankTests, .registration = TRUE, .fixes = "C_")
 
 export(fuzzy.sign.ci)
 export(fuzzy.sign.test)

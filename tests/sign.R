@@ -1,6 +1,8 @@
 
  library(fuzzyRankTests)
 
+ options(digits=5) # avoid rounding differences
+
  x <- c(-1.2, -0.7, -0.3, 0.1, 0.2, 0.3, 0.4, 0.9, 0.9, 1.0, 1.0,
      1.1, 1.5, 1.7, 1.9, 3.5, 5.1)
 

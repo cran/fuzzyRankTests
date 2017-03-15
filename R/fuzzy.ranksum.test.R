@@ -43,8 +43,8 @@ fuzzy.ranksum.test <- function(x, y,
 
     sortx <- as.double(sort(x))
     sorty <- as.double(sort(y))
-    out <- .Call("fpvranksum", sortx, sorty, as.double(mu),
-        alternative, as.double(tol), PACKAGE = "fuzzyRankTests")
+    out <- .Call(C_fpvranksum, sortx, sorty, as.double(mu),
+        alternative, as.double(tol))
 
     method <- "Mann-Whitney-Wilcoxon rank sum test"
     if (missing(alpha)) {

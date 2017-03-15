@@ -1,6 +1,8 @@
 
  library(fuzzyRankTests)
 
+ options(digits=5) # avoid rounding differences
+
  x <- c(-3, -2, -2, 0, 0, 0, 0, 1, 2, 3, 4, 4, 4, 5, 6, 7)
 
  fuzzy.signrank.test(x)

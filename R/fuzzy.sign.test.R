@@ -46,8 +46,8 @@ fuzzy.sign.test <- function(x, alternative = c("two.sided", "less", "greater"),
 
     tails <- 1 + as.numeric(alternative == "two.sided")
 
-    out <- .Call("fpvsign", as.integer(ll), as.integer(tt),
-        as.integer(uu), as.integer(tails), PACKAGE = "fuzzyRankTests")
+    out <- .Call(C_fpvsign, as.integer(ll), as.integer(tt),
+        as.integer(uu), as.integer(tails))
 
     statistic <- c(ll, tt, uu)
     names(statistic) <- c("below", "tied", "above")

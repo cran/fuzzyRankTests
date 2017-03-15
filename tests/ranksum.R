@@ -1,6 +1,8 @@
 
  library(fuzzyRankTests)
 
+ options(digits=5) # avoid rounding differences
+
  x <- c(1, 2, 3, 4, 4, 4, 5, 6, 7)
  y <- c(4, 5, 7, 7, 8, 9, 10, 11)
 

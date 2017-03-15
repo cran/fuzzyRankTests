@@ -1,7 +1,7 @@
 
-R version 3.2.1 (2015-06-18) -- "World-Famous Astronaut"
-Copyright (C) 2015 The R Foundation for Statistical Computing
-Platform: i686-pc-linux-gnu (32-bit)
+R version 3.3.3 (2017-03-06) -- "Another Canoe"
+Copyright (C) 2017 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -17,6 +17,8 @@ Type 'q()' to quit R.
 
 > 
 >  library(fuzzyRankTests)
+> 
+>  options(digits=5) # avoid rounding differences
 > 
 >  # follow sections 2.1.2 and 2.2 of the design doc
 > 
@@ -72,19 +74,19 @@ Type 'q()' to quit R.
 >  mu <- as.double(0)
 > 
 >  # less
->  out <- .Call("fpvsign", sum(x > mu), sum(x == mu), sum(x < mu), 1,
-+      PACKAGE = "fuzzyRankTests")
+>  out <- .Call(fuzzyRankTests:::C_fpvsign, sum(x > mu), sum(x == mu),
++      sum(x < mu), 1)
 >  mout <- myfun(x, mu, "less")
 >  print(out)
 $knots
-[1] 0.5981903 0.7727509 0.8949432 0.9615936 0.9893646 0.9979095
+[1] 0.59819 0.77275 0.89494 0.96159 0.98936 0.99791
 
 $values
 [1] 0.0000 0.0625 0.3125 0.6875 0.9375 1.0000
 
 >  print(mout)
 $knots
-[1] 0.5981903 0.7727509 0.8949432 0.9615936 0.9893646 0.9979095
+[1] 0.59819 0.77275 0.89494 0.96159 0.98936 0.99791
 
 $values
 [1] 0.0000 0.0625 0.3125 0.6875 0.9375 1.0000
@@ -93,19 +95,19 @@ $values
 [1] TRUE
 > 
 >  # greater
->  out <- .Call("fpvsign", sum(x < mu), sum(x == mu), sum(x > mu), 1,
-+      PACKAGE = "fuzzyRankTests")
+>  out <- .Call(fuzzyRankTests:::C_fpvsign, sum(x < mu), sum(x == mu),
++      sum(x > mu), 1)
 >  mout <- myfun(x, mu, "great")
 >  print(out)
 $knots
-[1] 0.002090454 0.010635376 0.038406372 0.105056763 0.227249146 0.401809692
+[1] 0.0020905 0.0106354 0.0384064 0.1050568 0.2272491 0.4018097
 
 $values
 [1] 0.0000 0.0625 0.3125 0.6875 0.9375 1.0000
 
 >  print(mout)
 $knots
-[1] 0.002090454 0.010635376 0.038406372 0.105056763 0.227249146 0.401809692
+[1] 0.0020905 0.0106354 0.0384064 0.1050568 0.2272491 0.4018097
 
 $values
 [1] 0.0000 0.0625 0.3125 0.6875 0.9375 1.0000
@@ -114,19 +116,19 @@ $values
 [1] TRUE
 > 
 >  # two-tailed
->  out <- .Call("fpvsign", sum(x > mu), sum(x == mu), sum(x < mu), 2,
-+      PACKAGE = "fuzzyRankTests")
+>  out <- .Call(fuzzyRankTests:::C_fpvsign, sum(x > mu), sum(x == mu),
++      sum(x < mu), 2)
 >  mout <- myfun(x, mu, "two")
 >  print(out)
 $knots
-[1] 0.004180908 0.021270752 0.076812744 0.210113525 0.454498291 0.803619385
+[1] 0.0041809 0.0212708 0.0768127 0.2101135 0.4544983 0.8036194
 
 $values
 [1] 0.0000 0.0625 0.3125 0.6875 0.9375 1.0000
 
 >  print(mout)
 $knots
-[1] 0.004180908 0.021270752 0.076812744 0.210113525 0.454498291 0.803619385
+[1] 0.0041809 0.0212708 0.0768127 0.2101135 0.4544983 0.8036194
 
 $values
 [1] 0.0000 0.0625 0.3125 0.6875 0.9375 1.0000
@@ -137,8 +139,8 @@ $values
 >  x2 <- as.double(c(-4, -4, x))
 > 
 >  # less
->  out <- .Call("fpvsign", sum(x2 > mu), sum(x2 == mu), sum(x2 < mu), 1,
-+      PACKAGE = "fuzzyRankTests")
+>  out <- .Call(fuzzyRankTests:::C_fpvsign, sum(x2 > mu), sum(x2 == mu),
++      sum(x2 < mu), 1)
 >  mout <- myfun(x2, mu, "less")
 >  # print(out)
 >  # print(mout)
@@ -148,8 +150,8 @@ $values
 >  mutoo <- as.double(2)
 > 
 >  # greater
->  out <- .Call("fpvsign", sum(x < mutoo), sum(x == mutoo), sum(x > mutoo), 1,
-+      PACKAGE = "fuzzyRankTests")
+>  out <- .Call(fuzzyRankTests:::C_fpvsign, sum(x < mutoo), sum(x == mutoo),
++      sum(x > mutoo), 1)
 >  mout <- myfun(x, mutoo, "great")
 >  # print(out)
 >  # print(mout)
@@ -160,8 +162,8 @@ $values
 > 
 >  x3 <- c(-5, -6, - 7, x2)
 > 
->  out <- .Call("fpvsign", sum(x3 < mu), sum(x3 == mu), sum(x3 > mu), 2,
-+      PACKAGE = "fuzzyRankTests")
+>  out <- .Call(fuzzyRankTests:::C_fpvsign, sum(x3 < mu), sum(x3 == mu),
++      sum(x3 > mu), 2)
 >  mout <- myfun(x3, mu, "two")
 >  # print(out)
 >  # print(mout)
@@ -170,8 +172,8 @@ $values
 > 
 >  x3 <- c(x3, 10)
 > 
->  out <- .Call("fpvsign", sum(x3 < mu), sum(x3 == mu), sum(x3 > mu), 2,
-+      PACKAGE = "fuzzyRankTests")
+>  out <- .Call(fuzzyRankTests:::C_fpvsign, sum(x3 < mu), sum(x3 == mu),
++      sum(x3 > mu), 2)
 >  mout <- myfun(x3, mu, "two")
 >  # print(out)
 >  # print(mout)
@@ -181,4 +183,4 @@ $values
 > 
 > proc.time()
    user  system elapsed 
-  0.276   0.032   0.302 
+  0.116   0.012   0.120 

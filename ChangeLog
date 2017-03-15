@@ -28,3 +28,8 @@
  0.3-7   got rid of .Platform$OS.type == "unix" in tests because of
              complaint from CRAN
 
+ 0.3-8   modernize registration of native routines
+
+ 0.3-9   add DOI to reference in DESCRIPTION file
+         also comment out one test with confusing result in tests/sign-ci.R
+

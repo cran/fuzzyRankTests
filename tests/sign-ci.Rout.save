@@ -1,7 +1,7 @@
 
-R version 3.2.1 (2015-06-18) -- "World-Famous Astronaut"
-Copyright (C) 2015 The R Foundation for Statistical Computing
-Platform: x86_64-unknown-linux-gnu (64-bit)
+R version 3.3.3 (2017-03-06) -- "Another Canoe"
+Copyright (C) 2017 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -17,6 +17,8 @@ Type 'q()' to quit R.
 
 > 
 >  library(fuzzyRankTests)
+> 
+>  options(digits=5) # avoid rounding differences
 > 
 >  x <- c(-1.2, -0.7, -0.3, 0.1, 0.2, 0.3, 0.4, 0.9, 0.9, 1.0, 1.0,
 +      1.1, 1.5, 1.7, 1.9, 3.5, 5.1)
@@ -352,23 +354,10 @@ Fuzzy confidence interval:
 
 
 > 
->  fuzzy.sign.ci(x, alt = "great", conf = 0.5)
-
-	sign test
-
-data:  x 
-50 percent confidence interval:
-
-Fuzzy confidence interval:
-
-         set value
- (-Inf, 0.9)  0.00
-       {0.9}  0.25
-    (0.9, 1)  1.00
-         {1}  1.00
-    (1, Inf)  1.00
-
-
+>  # as per request from Uwe Ligges (speaking for CRAN) comment this out
+>  # because it gives a result that is hard to interpret
+>  # on some computers but not on others (64 bit vs 32 bit)
+>  # fuzzy.sign.ci(x, alt = "great", conf = 0.5)
 > 
 >  fuzzy.sign.ci(x, alt = "great", conf = 0.25)
 
@@ -432,4 +421,4 @@ and right limits
 > 
 > proc.time()
    user  system elapsed 
-  0.142   0.017   0.191 
+  0.136   0.028   0.153 

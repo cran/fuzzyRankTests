@@ -1,6 +1,8 @@
 
  library(fuzzyRankTests)
 
+ options(digits=5) # avoid rounding differences
+
  # follow sections 2.1.2 and 2.2 of the design doc
 
  myfun <- function(x, mu, alternative = c("two.sided", "less", "greater")) {
@@ -55,24 +57,24 @@
  mu <- as.double(0)
 
  # less
- out <- .Call("fpvsign", sum(x > mu), sum(x == mu), sum(x < mu), 1,
-     PACKAGE = "fuzzyRankTests")
+ out <- .Call(fuzzyRankTests:::C_fpvsign, sum(x > mu), sum(x == mu),
+     sum(x < mu), 1)
  mout <- myfun(x, mu, "less")
  print(out)
  print(mout)
  all.equal(out, mout)
 
  # greater
- out <- .Call("fpvsign", sum(x < mu), sum(x == mu), sum(x > mu), 1,
-     PACKAGE = "fuzzyRankTests")
+ out <- .Call(fuzzyRankTests:::C_fpvsign, sum(x < mu), sum(x == mu),
+     sum(x > mu), 1)
  mout <- myfun(x, mu, "great")
  print(out)
  print(mout)
  all.equal(out, mout)
 
  # two-tailed
- out <- .Call("fpvsign", sum(x > mu), sum(x == mu), sum(x < mu), 2,
-     PACKAGE = "fuzzyRankTests")
+ out <- .Call(fuzzyRankTests:::C_fpvsign, sum(x > mu), sum(x == mu),
+     sum(x < mu), 2)
  mout <- myfun(x, mu, "two")
  print(out)
  print(mout)
@@ -81,8 +83,8 @@
  x2 <- as.double(c(-4, -4, x))
 
  # less
- out <- .Call("fpvsign", sum(x2 > mu), sum(x2 == mu), sum(x2 < mu), 1,
-     PACKAGE = "fuzzyRankTests")
+ out <- .Call(fuzzyRankTests:::C_fpvsign, sum(x2 > mu), sum(x2 == mu),
+     sum(x2 < mu), 1)
  mout <- myfun(x2, mu, "less")
  # print(out)
  # print(mout)
@@ -91,8 +93,8 @@
  mutoo <- as.double(2)
 
  # greater
- out <- .Call("fpvsign", sum(x < mutoo), sum(x == mutoo), sum(x > mutoo), 1,
-     PACKAGE = "fuzzyRankTests")
+ out <- .Call(fuzzyRankTests:::C_fpvsign, sum(x < mutoo), sum(x == mutoo),
+     sum(x > mutoo), 1)
  mout <- myfun(x, mutoo, "great")
  # print(out)
  # print(mout)
@@ -102,8 +104,8 @@
 
  x3 <- c(-5, -6, - 7, x2)
 
- out <- .Call("fpvsign", sum(x3 < mu), sum(x3 == mu), sum(x3 > mu), 2,
-     PACKAGE = "fuzzyRankTests")
+ out <- .Call(fuzzyRankTests:::C_fpvsign, sum(x3 < mu), sum(x3 == mu),
+     sum(x3 > mu), 2)
  mout <- myfun(x3, mu, "two")
  # print(out)
  # print(mout)
@@ -111,8 +113,8 @@
 
  x3 <- c(x3, 10)
 
- out <- .Call("fpvsign", sum(x3 < mu), sum(x3 == mu), sum(x3 > mu), 2,
-     PACKAGE = "fuzzyRankTests")
+ out <- .Call(fuzzyRankTests:::C_fpvsign, sum(x3 < mu), sum(x3 == mu),
+     sum(x3 > mu), 2)
  mout <- myfun(x3, mu, "two")
  # print(out)
  # print(mout)

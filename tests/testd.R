@@ -53,32 +53,32 @@
 
  library(fuzzyRankTests)
 
+ options(digits=5) # avoid rounding differences
+
  x <- as.double(c(-3, -2, -2, 0, 0, 0, 0, 1, 2, 3, 4, 4, 4, 5, 6, 7))
  mu <- as.double(0)
  tol <- sqrt(.Machine$double.eps)
 
- out <- .Call("fpvsignrank", x, mu, "less", tol, PACKAGE = "fuzzyRankTests")
+ out <- .Call(fuzzyRankTests:::C_fpvsignrank, x, mu, "less", tol)
  print(out)
  all.equal(out, myfun(x, "less"))
 
  x2 <- as.double(c(-4, -4, x))
 
- out <- .Call("fpvsignrank", x2, mu, "less", tol, PACKAGE = "fuzzyRankTests")
+ out <- .Call(fuzzyRankTests:::C_fpvsignrank, x2, mu, "less", tol)
  print(out)
  all.equal(out, myfun(x2, "less"))
 
  mutoo <- as.double(2)
 
- out <- .Call("fpvsignrank", x, mutoo, "greater", tol,
-     PACKAGE = "fuzzyRankTests")
+ out <- .Call(fuzzyRankTests:::C_fpvsignrank, x, mutoo, "greater", tol)
  print(out)
  all.equal(out, myfun(x - mutoo, "great"))
 
  ##### check for error found in devel ####
- try(.Call("fpvsignrank", x, mutoo, "two", tol, PACKAGE = "fuzzyRankTests"))
+ try(.Call(fuzzyRankTests:::C_fpvsignrank, x, mutoo, "two", tol))
 
- out <- .Call("fpvsignrank", x, mutoo, "two.sided", tol,
-     PACKAGE = "fuzzyRankTests")
+ out <- .Call(fuzzyRankTests:::C_fpvsignrank, x, mutoo, "two.sided", tol)
  print(out)
  all.equal(out, myfun(x - mutoo, "two"))
 
