@@ -7,6 +7,13 @@
 #include <math.h>
 #include <string.h>
 
+// see section 6.7.1 of Writing R Extensions
+#include "Rversion.h"
+#if R_VERSION < R_Version(4, 2, 0)
+extern void wilcox_free(void);
+extern void signrank_free(void);
+#endif
+
 SEXP fpvsignrank(SEXP xin, SEXP muin, SEXP altin, SEXP tolin)
 {
     double *x;
@@ -268,6 +275,9 @@ SEXP fpvsignrank(SEXP xin, SEXP muin, SEXP altin, SEXP tolin)
            fred *= 2.0;
         knots[i] = fred;
     }
+    // see section 6.7.1 of Writing R Extensions
+    signrank_free();
+    wilcox_free();
 
     for (i = 0; i <= t; ++i)
         cdftie[i + 1] += cdftie[i];

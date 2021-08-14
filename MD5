@@ -1,5 +1,5 @@
-c7af14586a68d77e8fb29c1525912ee7 *ChangeLog
-f13c0c6693e8d01a276dce565f4a62b6 *DESCRIPTION
+40d669d6321b86549baf6d4d873b6ca7 *ChangeLog
+7909607badc541544f4ddc47b2e305de *DESCRIPTION
 7415abda02d9ebfa6620b0b9bc2b8da2 *LICENSE
 150cfd2398673c4a64fd92996bbb154a *NAMESPACE
 4706812d33fc403d6837c85bfe58e0cd *R/fuzzy.ranksum.ci.R
@@ -18,9 +18,9 @@ f6c971b53c65a22aba7cff672b810fbc *man/fuzzy.ranksum.test.Rd
 86e0488eb44b53ca5470e859f73a4ea1 *man/fuzzy.signrank.test.Rd
 9a8efd3d36f20333d91893f1ca0e58f0 *man/fuzzyRankHelper.Rd
 a84ff979fcebdfd681f7bacc511a9dc3 *src/Makevars
-d413a2eb5561e683563437d64494497a *src/fpvranksum.c
+fc37af74fa4b777406c2b45cc6382fd1 *src/fpvranksum.c
 8fc14db0bc6152cc717faaee0c9f58aa *src/fpvsign.c
-4eb42d5381e378d09215ba529b0096c0 *src/fpvsignrank.c
+82898a3473752ddb0c10aabf23ba2d90 *src/fpvsignrank.c
 849cba7d6b02644fb11ef1f19eda529e *src/fuzzyranktests.h
 0f4f0e7795f93816cbed5ede555a3564 *src/getScalarCharacter.c
 a30fabeffd12e2ad37d9645225a7d4b1 *src/getScalarInteger.c

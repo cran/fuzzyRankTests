@@ -33,3 +33,5 @@
  0.3-9   add DOI to reference in DESCRIPTION file
          also comment out one test with confusing result in tests/sign-ci.R
 
+0.4      call C functions wilcox_free and signrank_free as per
+         Writing R Extensions

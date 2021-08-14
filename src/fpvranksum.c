@@ -6,6 +6,12 @@
 #include "myutil.h"
 #include <string.h>
 
+// see section 6.7.1 of Writing R Extensions
+#include "Rversion.h"
+#if R_VERSION < R_Version(4, 2, 0)
+extern void wilcox_free(void);
+#endif
+
 SEXP fpvranksum(SEXP xin, SEXP yin, SEXP muin, SEXP altin, SEXP tolin)
 {
     double *x;
@@ -204,6 +210,8 @@ SEXP fpvranksum(SEXP xin, SEXP yin, SEXP muin, SEXP altin, SEXP tolin)
            fred *= 2.0;
         knots[i] = fred;
     }
+    // see section 6.7.1 of Writing R Extensions
+    wilcox_free();
 
     for (i = 0; i <= t; ++i)
         cdftie[i + 1] += cdftie[i];
