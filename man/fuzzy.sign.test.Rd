@@ -81,14 +81,16 @@ hypothesis that \eqn{\mu}{mu} is the true parameter value with probability
   \item{tol}{the argument \code{tol}.}
 }
 \references{
-  Charles J. Geyer (submitted). \cr
-  Fuzzy P-values and Ties in Nonparametric Tests. \cr
-  \url{http://www.stat.umn.edu/geyer/fuzz/ties.pdf}
+  Geyer, C. J. and Meeden, G. D. (2005)
+  Fuzzy and randomized confidence intervals and \eqn{P}-values
+  (with discussion).
+  \emph{Statistical Science}, \bold{20}, 358--387.
+  \doi{10.1214/088342305000000340}.
 
-  Charles J. Geyer and Glen D. Meeden (2005). \cr
-  Fuzzy and Randomized Confidence Intervals and P-values. \cr
-  To appear in \emph{Statistical Science} (with discussion). \cr
-  \url{http://www.stat.umn.edu/geyer/fuzz/fuzz5.pdf}
+  Thompson, E. A. and Geyer, C. J. (2007)
+  Fuzzy \eqn{P}-values in latent variable problems.
+  \emph{Biometrika}, \bold{94}, 49--60.
+  \doi{10.1093/biomet/asm001}.
 }
 \seealso{
   \code{\link{plot.fuzzyrankci}},

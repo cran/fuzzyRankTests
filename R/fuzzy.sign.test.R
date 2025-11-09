@@ -56,7 +56,8 @@ fuzzy.sign.test <- function(x, alternative = c("two.sided", "less", "greater"),
         foo <- list(knots = out$knots, values = out$values,
             statistic = statistic,
             null.value = c(mu = mu), alternative = alternative,
-            method = method, data.name = dname)
+            method = method, data.name = dname,
+            parameter.name = "population median")
         return(structure(foo, class = "fuzzyranktest"))
     }
 
@@ -76,6 +77,7 @@ fuzzy.sign.test <- function(x, alternative = c("two.sided", "less", "greater"),
     foo <- list(knots = out$knots, values = out$values,
         reject.prob = reject, alpha = alpha, statistic = statistic,
         null.value = c(mu = mu), alternative = alternative,
-        method = method, data.name = dname, tol = tol)
+        method = method, data.name = dname, tol = tol,
+        parameter.name = "population median")
     return(structure(foo, class = "fuzzyranktest"))
 }

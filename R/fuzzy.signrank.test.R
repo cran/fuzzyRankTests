@@ -44,7 +44,8 @@ fuzzy.signrank.test <- function(x,
     if (missing(alpha)) {
         foo <- list(knots = out$knots, values = out$values,
             null.value = c(mu = mu), alternative = alternative,
-            method = method, data.name = dname)
+            method = method, data.name = dname,
+            parameter.name = "location parameter")
         return(structure(foo, class = "fuzzyranktest"))
     }
 
@@ -64,6 +65,7 @@ fuzzy.signrank.test <- function(x,
     foo <- list(knots = out$knots, values = out$values,
         reject.prob = reject, alpha = alpha,
         null.value = c(mu = mu), alternative = alternative,
-        method = method, data.name = dname, tol = tol)
+        method = method, data.name = dname, tol = tol,
+        parameter.name = "location parameter")
     return(structure(foo, class = "fuzzyranktest"))
 }

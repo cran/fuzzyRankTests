@@ -36,10 +36,10 @@ plot.fuzzyrankci <- function(x, y, add = FALSE, verticals = FALSE,
 
     if (! add) {
         if (full.ylim)
-            plot(xfoo, yfoo, type = "n", xlab = x$data.name,
+            plot(xfoo, yfoo, type = "n", xlab = x$parameter.name,
                 ylab = "", main = main, ylim = c(0, 1), ...)
         else
-            plot(xfoo, yfoo, type = "n", xlab = x$data.name,
+            plot(xfoo, yfoo, type = "n", xlab = x$parameter.name,
                 ylab = "", main = main, ...)
     }
 

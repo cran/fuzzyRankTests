@@ -50,7 +50,8 @@ fuzzy.ranksum.test <- function(x, y,
     if (missing(alpha)) {
         foo <- list(knots = out$knots, values = out$values,
             null.value = c(mu = mu), alternative = alternative,
-            method = method, data.name = dname)
+            method = method, data.name = dname,
+            parameter.name = "shift parameter")
         return(structure(foo, class = "fuzzyranktest"))
     }
 
@@ -70,6 +71,7 @@ fuzzy.ranksum.test <- function(x, y,
     foo <- list(knots = out$knots, values = out$values,
         reject.prob = reject, alpha = alpha,
         null.value = c(mu = mu), alternative = alternative,
-        method = method, data.name = dname, tol = tol)
+        method = method, data.name = dname, tol = tol,
+        parameter.name = "shift parameter")
     return(structure(foo, class = "fuzzyranktest"))
 }

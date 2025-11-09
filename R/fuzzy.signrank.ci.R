@@ -139,7 +139,7 @@ fuzzy.signrank.ci <- function(x,
     foo <- list(knots = whyknots, knot.values = kvalues,
         interval.values = ivalues, alternative = alternative,
         method = method, data.name = dname, conf.level = conf.level,
-        tol = tol)
+        tol = tol, population.name = "location parameter")
     return(structure(foo, class = "fuzzyrankci"))
 }
 

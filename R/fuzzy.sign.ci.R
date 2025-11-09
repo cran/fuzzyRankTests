@@ -136,7 +136,7 @@ fuzzy.sign.ci <- function(x, alternative = c("two.sided", "less", "greater"),
     foo <- list(knots = whyknots, knot.values = kvalues,
         interval.values = ivalues, alternative = alternative,
         method = method, data.name = dname, conf.level = conf.level,
-        tol = tol)
+        tol = tol, parameter.name = "population median")
     return(structure(foo, class = "fuzzyrankci"))
 }
 

@@ -13,8 +13,13 @@
 \newcommand{\opor}{\mathbin{\rm or}}
 \newcommand{\opand}{\mathbin{\rm and}}
 
+\newcommand{\abs}[1]{\lvert #1 \rvert}
+
 \newtheorem{theorem}{Theorem}
 \newtheorem{hypothesis}{Hypothesis}
+
+%\VignetteEngine{knitr::knitr}
+%\VignetteIndexEntry{Design of R Package fuzzyRankTests}
 
 \begin{document}
 
@@ -158,9 +163,27 @@ we consider these two hypotheses the same in practice.
 
 Following \citet{thompson-geyer},
 we call $W$ the \emph{latent test statistic} and base the fuzzy test
-on it.  Table~1 in \citet{fuzzy-rank} shows how a fuzzy test based
-on such a test statistic works.  The rest of that paper sketches the
-tie breaking by infinitesimal jittering we explore in detail here.
+on it.  Table~\ref{tab:endpoint} shows how a fuzzy test based
+on such a test statistic works.
+\begin{table}
+\caption{Endpoints of Supports of Fuzzy $P$-values.  $T$ is a random variable
+having the null distribution of the test statistic, $t$ is the observed value
+of the test statistic, and $\tau$ is the center of symmetry of the null
+distribution of the test statistic.  The fuzzy $P$-value is uniformly
+distributed on the interval with the endpoints indicated in the table.}
+\label{tab:endpoint}
+\begin{center}
+\begin{tabular}{lcc}
+       & lower & upper \\
+       & endpoint & endpoint \\
+\hline
+upper-tailed & $\Pr(T > t)$ & $\Pr(T \ge t)$ \\
+lower-tailed & $\Pr(T < t)$ & $\Pr(T \le t)$ \\
+two-tailed & $\Pr(\abs{T - \tau} > \abs{t - \tau})$ &
+    $\Pr(\abs{T - \tau} \ge \abs{t - \tau})$
+\end{tabular}
+\end{center}
+\end{table}
 
 \subsection{One-Tailed Tests}
 
@@ -895,38 +918,7 @@ Thompson, E.~A. and Geyer, C.~J. (2007).
 \newblock Fuzzy P-values in latent variable problems.
 \newblock \emph{Biometrika} \textbf{94} 49--60.
 
-\bibitem[Geyer(submitted)]{fuzzy-rank}
-Geyer, C.~J. (submitted).
-\newblock  Fuzzy P-values and ties in nonparametric tests.
-\newblock  \url{http://www.stat.umn.edu/geyer/fuzz/ties.pdf}
-
 \end{thebibliography}
 
 \end{document}
-
-\begin{center} \LARGE REVISED DOWN TO HERE \end{center}
-
-
-\pagebreak[3]
-Hence we calculate as follows
-\begin{verbatim}
-k <- seq(0, tt)
-gk <- max(uu + k, ll + tt - k)
-\end{verbatim}
-where we use \verb@ll@, \verb@tt@, \verb@uu@ in R rather than $l$, $t$, and $u$
-to avoid clobbering the \verb@t@ function.  Then
-\begin{verbatim}
-mixprob <- dbinom(k, tt, 1 / 2)
-fred <- split(mixprob, gk)
-sally <- sapply(fred, sum)
-gk <- as.numeric(names(sally))
-mixprob <- as.numeric(sally)
-\end{verbatim}
-And now we can proceed more or less as in the one-tailed case.
-\begin{verbatim}
-breaks <- rev(dbinom(c(gk[1] - 1, gk), ll + tt + uu, 1 / 2,
-    lower.tail = FALSE))
-breaks <- pmin(1, 2 * breaks)
-density <- mixprob / diff(breaks)
-\end{verbatim}
 

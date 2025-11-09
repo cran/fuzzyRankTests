@@ -1,7 +1,7 @@
 
-R version 3.3.3 (2017-03-06) -- "Another Canoe"
-Copyright (C) 2017 The R Foundation for Statistical Computing
-Platform: x86_64-pc-linux-gnu (64-bit)
+R Under development (unstable) (2025-10-18 r88943) -- "Unsuffered Consequences"
+Copyright (C) 2025 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -44,7 +44,7 @@ values
  0.0152201 1.00000
 
 > 
->  wilcox.test(x, y)
+>  wilcox.test(x, y, exact = FALSE)
 
 	Wilcoxon rank sum test with continuity correction
 
@@ -52,8 +52,6 @@ data:  x and y
 W = 8, p-value = 0.0076
 alternative hypothesis: true location shift is not equal to 0
 
-Warning message:
-In wilcox.test.default(x, y) : cannot compute exact p-value with ties
 > 
 >  fuzzy.ranksum.test(x, y, alt = "less")
 
@@ -76,7 +74,7 @@ values
  0.0076100 1.00000
 
 > 
->  wilcox.test(x, y, alt = "less")
+>  wilcox.test(x, y, alt = "less", exact = FALSE)
 
 	Wilcoxon rank sum test with continuity correction
 
@@ -84,9 +82,6 @@ data:  x and y
 W = 8, p-value = 0.0038
 alternative hypothesis: true location shift is less than 0
 
-Warning message:
-In wilcox.test.default(x, y, alt = "less") :
-  cannot compute exact p-value with ties
 > 
 >  fuzzy.ranksum.ci(x, y)
 
@@ -106,7 +101,7 @@ Fuzzy confidence interval:
 
 
 > 
->  wilcox.test(x, y, conf.int = TRUE)
+>  wilcox.test(x, y, conf.int = TRUE, exact = FALSE)
 
 	Wilcoxon rank sum test with continuity correction
 
@@ -119,11 +114,6 @@ sample estimates:
 difference in location 
                     -4 
 
-Warning messages:
-1: In wilcox.test.default(x, y, conf.int = TRUE) :
-  cannot compute exact p-value with ties
-2: In wilcox.test.default(x, y, conf.int = TRUE) :
-  cannot compute exact confidence intervals with ties
 > 
 >  fuzzy.ranksum.ci(x, y, alt = "less")
 
@@ -141,7 +131,7 @@ Fuzzy confidence interval:
 
 
 > 
->  wilcox.test(x, y, conf.int = TRUE, alt = "less")
+>  wilcox.test(x, y, conf.int = TRUE, alt = "less", exact = FALSE)
 
 	Wilcoxon rank sum test with continuity correction
 
@@ -154,11 +144,6 @@ sample estimates:
 difference in location 
                     -4 
 
-Warning messages:
-1: In wilcox.test.default(x, y, conf.int = TRUE, alt = "less") :
-  cannot compute exact p-value with ties
-2: In wilcox.test.default(x, y, conf.int = TRUE, alt = "less") :
-  cannot compute exact confidence intervals with ties
 > 
 >  fuzzy.ranksum.ci(x, y, alt = "great")
 
@@ -176,7 +161,7 @@ Fuzzy confidence interval:
 
 
 > 
->  wilcox.test(x, y, conf.int = TRUE, alt = "great")
+>  wilcox.test(x, y, conf.int = TRUE, alt = "great", exact = FALSE)
 
 	Wilcoxon rank sum test with continuity correction
 
@@ -189,13 +174,8 @@ sample estimates:
 difference in location 
                     -4 
 
-Warning messages:
-1: In wilcox.test.default(x, y, conf.int = TRUE, alt = "great") :
-  cannot compute exact p-value with ties
-2: In wilcox.test.default(x, y, conf.int = TRUE, alt = "great") :
-  cannot compute exact confidence intervals with ties
 > 
 > 
 > proc.time()
    user  system elapsed 
-  0.132   0.020   0.146 
+  0.134   0.038   0.162 

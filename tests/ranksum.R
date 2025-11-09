@@ -8,21 +8,21 @@
 
  fuzzy.ranksum.test(x, y)
 
- wilcox.test(x, y)
+ wilcox.test(x, y, exact = FALSE)
 
  fuzzy.ranksum.test(x, y, alt = "less")
 
- wilcox.test(x, y, alt = "less")
+ wilcox.test(x, y, alt = "less", exact = FALSE)
 
  fuzzy.ranksum.ci(x, y)
 
- wilcox.test(x, y, conf.int = TRUE)
+ wilcox.test(x, y, conf.int = TRUE, exact = FALSE)
 
  fuzzy.ranksum.ci(x, y, alt = "less")
 
- wilcox.test(x, y, conf.int = TRUE, alt = "less")
+ wilcox.test(x, y, conf.int = TRUE, alt = "less", exact = FALSE)
 
  fuzzy.ranksum.ci(x, y, alt = "great")
 
- wilcox.test(x, y, conf.int = TRUE, alt = "great")
+ wilcox.test(x, y, conf.int = TRUE, alt = "great", exact = FALSE)
 

@@ -35,3 +35,6 @@
 
 0.4      call C functions wilcox_free and signrank_free as per
          Writing R Extensions
+
+0.5      revise tests to not give warnings with R-devel
+         add vignette

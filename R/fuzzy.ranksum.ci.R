@@ -144,7 +144,7 @@ fuzzy.ranksum.ci <- function(x, y,
     foo <- list(knots = whyknots, knot.values = kvalues,
         interval.values = ivalues, alternative = alternative,
         method = method, data.name = dname, conf.level = conf.level,
-        tol = tol)
+        tol = tol, population.name = "shift parameter")
     return(structure(foo, class = "fuzzyrankci"))
 }
 
